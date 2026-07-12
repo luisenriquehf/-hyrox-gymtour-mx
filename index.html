@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYROX Gym Tour México — Temporada 26/27</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --y: #FFED00;
+    --bk: #0A0A0A;
+    --wh: #F5F5F5;
+    --g1: #141414;
+    --g2: #1E1E1E;
+    --gl: #666;
+    --gl2: #999;
+    --bd: rgba(255,255,255,0.07);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bk);
+    color: var(--wh);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV ── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(10,10,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--bd);
+  }
+
+  .nav-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 6px;
+    color: var(--wh);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--y); }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gl2);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--wh); }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 48px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(to bottom, rgba(10,10,10,0.3) 0%, rgba(10,10,10,0.85) 70%, rgba(10,10,10,1) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 80px,
+        rgba(255,255,255,0.012) 80px,
+        rgba(255,255,255,0.012) 81px
+      ),
+      repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 80px,
+        rgba(255,255,255,0.012) 80px,
+        rgba(255,255,255,0.012) 81px
+      );
+    background-color: var(--g1);
+  }
+
+  .hero-watermark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(140px, 22vw, 320px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.04);
+    letter-spacing: -4px;
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-content { position: relative; }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--y);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--y);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 11vw, 140px);
+    line-height: 0.88;
+    letter-spacing: 1px;
+    color: var(--wh);
+    margin-bottom: 32px;
+  }
+
+  .hero-title em {
+    display: block;
+    font-style: normal;
+    color: var(--gl);
+    font-size: clamp(40px, 7vw, 88px);
+  }
+
+  .hero-bottom {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 32px;
+  }
+
+  .hero-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--gl2);
+    max-width: 440px;
+    line-height: 1.75;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    flex-shrink: 0;
+  }
+
+  .hero-stat-n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 44px;
+    line-height: 1;
+    color: var(--wh);
+  }
+
+  .hero-stat-l {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gl);
+    margin-top: 4px;
+  }
+
+  /* ── TICKER ── */
+  .ticker-wrap {
+    border-top: 1px solid var(--bd);
+    border-bottom: 1px solid var(--bd);
+    overflow: hidden;
+    padding: 14px 0;
+    background: var(--g1);
+  }
+
+  .ticker-inner {
+    display: flex;
+    gap: 0;
+    animation: ticker 30s linear infinite;
+    width: max-content;
+  }
+
+  .ticker-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 0 32px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: var(--gl);
+    white-space: nowrap;
+  }
+
+  .ticker-item span {
+    width: 4px;
+    height: 4px;
+    background: var(--y);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── SECTIONS ── */
+  .section {
+    padding: 96px 48px;
+    border-bottom: 1px solid var(--bd);
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gl);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--bd);
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1;
+    letter-spacing: 1px;
+    color: var(--wh);
+    margin-bottom: 20px;
+  }
+
+  .section-body {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--gl2);
+    max-width: 560px;
+    line-height: 1.8;
+  }
+
+  /* ── PILLARS ── */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--bd);
+    border: 1px solid var(--bd);
+    margin-top: 56px;
+  }
+
+  .pillar {
+    background: var(--bk);
+    padding: 36px 32px;
+    transition: background 0.2s;
+  }
+
+  .pillar:hover { background: var(--g1); }
+
+  .pillar-n {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--gl);
+    margin-bottom: 16px;
+  }
+
+  .pillar-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+    color: var(--wh);
+    margin-bottom: 10px;
+  }
+
+  .pillar-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--gl2);
+    line-height: 1.65;
+  }
+
+  /* ── CALENDAR PREVIEW ── */
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1px;
+    background: var(--bd);
+    border: 1px solid var(--bd);
+    margin-top: 56px;
+  }
+
+  .cal-card {
+    background: var(--bk);
+    padding: 24px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    transition: background 0.2s;
+    text-decoration: none;
+  }
+
+  .cal-card:hover { background: var(--g1); }
+
+  .cal-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    color: var(--gl);
+  }
+
+  .cal-city {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 0.5px;
+    color: var(--wh);
+  }
+
+  .cal-date {
+    font-size: 12px;
+    color: var(--gl2);
+    font-weight: 300;
+  }
+
+  .cal-tag {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border: 1px solid var(--bd);
+    color: var(--gl);
+    margin-top: 4px;
+    align-self: flex-start;
+  }
+
+  .cal-tag.carrera {
+    border-color: rgba(255,237,0,0.25);
+    color: rgba(255,237,0,0.7);
+  }
+
+  .cal-more {
+    background: var(--g1);
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    gap: 12px;
+  }
+
+  .cal-more-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 2px;
+    color: var(--gl);
+    transition: color 0.2s;
+  }
+
+  .cal-more:hover .cal-more-text { color: var(--wh); }
+
+  /* ── SPLIT SECTION ── */
+  .split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--bd);
+    border: 1px solid var(--bd);
+    margin-top: 56px;
+  }
+
+  .split-cell {
+    background: var(--bk);
+    padding: 40px 36px;
+    text-decoration: none;
+    transition: background 0.2s;
+    display: block;
+  }
+
+  .split-cell:hover { background: var(--g1); }
+
+  .split-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--y);
+    margin-bottom: 16px;
+  }
+
+  .split-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 0.5px;
+    color: var(--wh);
+    margin-bottom: 12px;
+  }
+
+  .split-body {
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--gl2);
+    line-height: 1.65;
+    margin-bottom: 24px;
+  }
+
+  .split-arrow {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gl);
+    transition: color 0.2s;
+  }
+
+  .split-cell:hover .split-arrow { color: var(--wh); }
+
+  /* ── TEAM ── */
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1px;
+    background: var(--bd);
+    border: 1px solid var(--bd);
+    margin-top: 56px;
+  }
+
+  .team-card {
+    background: var(--bk);
+    padding: 28px 24px;
+    transition: background 0.2s;
+  }
+
+  .team-card:hover { background: var(--g1); }
+
+  .team-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--g2);
+    border: 1px solid var(--bd);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--gl2);
+    margin-bottom: 14px;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .team-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--wh);
+    margin-bottom: 4px;
+  }
+
+  .team-role {
+    font-size: 11px;
+    color: var(--gl);
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+
+  .team-ig {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--gl);
+    text-decoration: none;
+    border: 1px solid var(--bd);
+    padding: 3px 8px;
+    display: inline-block;
+    transition: all 0.2s;
+  }
+
+  .team-ig:hover {
+    border-color: rgba(255,237,0,0.3);
+    color: var(--y);
+  }
+
+  /* ── CTA BANNER ── */
+  .cta-banner {
+    padding: 96px 48px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-banner::before {
+    content: 'GYM TOUR';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(80px, 14vw, 180px);
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255,255,255,0.03);
+    white-space: nowrap;
+    pointer-events: none;
+  }
+
+  .cta-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gl);
+    margin-bottom: 24px;
+  }
+
+  .cta-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(36px, 6vw, 72px);
+    line-height: 1;
+    color: var(--wh);
+    margin-bottom: 16px;
+    position: relative;
+  }
+
+  .cta-sub {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--gl2);
+    max-width: 440px;
+    margin: 0 auto 40px;
+    line-height: 1.7;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    padding: 16px 40px;
+    background: var(--y);
+    color: var(--bk);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover { opacity: 0.85; }
+
+  .btn-secondary {
+    display: inline-block;
+    padding: 16px 40px;
+    background: transparent;
+    color: var(--gl2);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border: 1px solid var(--bd);
+    transition: all 0.2s;
+  }
+
+  .btn-secondary:hover {
+    border-color: rgba(255,255,255,0.2);
+    color: var(--wh);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 48px;
+    border-top: 1px solid var(--bd);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 4px;
+    color: var(--gl);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gl);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--wh); }
+
+  .footer-note {
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: rgba(255,255,255,0.15);
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { padding: 0 24px 48px; }
+    .hero-bottom { flex-direction: column; align-items: flex-start; }
+    .hero-stats { gap: 24px; }
+    .section { padding: 64px 24px; }
+    .pillars { grid-template-columns: 1fr; }
+    .split { grid-template-columns: 1fr; }
+    footer { padding: 24px; flex-direction: column; align-items: flex-start; }
+    .cta-banner { padding: 64px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <a href="index.html" class="nav-logo">HYROX <span>MX</span></a>
+  <ul class="nav-links">
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html">Gym Owners</a></li>
+    <li><a href="equipo.html">El Equipo</a></li>
+    <li><a href="staff.html">Staff ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-watermark">HYROX</div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Temporada 26/27 · México</div>
+    <h1 class="hero-title">
+      Gym Tour
+      <em>México</em>
+    </h1>
+    <div class="hero-bottom">
+      <p class="hero-sub">
+        El motor de crecimiento de HYROX México. 12 ciudades. Una temporada. El equipo que lleva HYROX a cada gym afiliado del país.
+      </p>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-n">12</div>
+          <div class="hero-stat-l">Gym Tours</div>
+        </div>
+        <div>
+          <div class="hero-stat-n">6</div>
+          <div class="hero-stat-l">Carreras</div>
+        </div>
+        <div>
+          <div class="hero-stat-n">12</div>
+          <div class="hero-stat-l">Ciudades</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-inner">
+    <div class="ticker-item"><span></span>Acapulco</div>
+    <div class="ticker-item"><span></span>Querétaro</div>
+    <div class="ticker-item"><span></span>León</div>
+    <div class="ticker-item"><span></span>Ciudad de México</div>
+    <div class="ticker-item"><span></span>Tijuana</div>
+    <div class="ticker-item"><span></span>Mérida</div>
+    <div class="ticker-item"><span></span>Cancún</div>
+    <div class="ticker-item"><span></span>Guadalajara</div>
+    <div class="ticker-item"><span></span>Saltillo</div>
+    <div class="ticker-item"><span></span>Monterrey</div>
+    <div class="ticker-item"><span></span>Chihuahua</div>
+    <div class="ticker-item"><span></span>Puebla</div>
+    <!-- Duplicate for seamless loop -->
+    <div class="ticker-item"><span></span>Acapulco</div>
+    <div class="ticker-item"><span></span>Querétaro</div>
+    <div class="ticker-item"><span></span>León</div>
+    <div class="ticker-item"><span></span>Ciudad de México</div>
+    <div class="ticker-item"><span></span>Tijuana</div>
+    <div class="ticker-item"><span></span>Mérida</div>
+    <div class="ticker-item"><span></span>Cancún</div>
+    <div class="ticker-item"><span></span>Guadalajara</div>
+    <div class="ticker-item"><span></span>Saltillo</div>
+    <div class="ticker-item"><span></span>Monterrey</div>
+    <div class="ticker-item"><span></span>Chihuahua</div>
+    <div class="ticker-item"><span></span>Puebla</div>
+  </div>
+</div>
+
+<!-- POR QUÉ EXISTE -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">Por qué existe</div>
+    <h2 class="section-title">No es solo una clase.</h2>
+    <p class="section-body">El Gym Tour es la iniciativa más estratégica de HYROX México. Una vez al mes, el equipo viaja a una ciudad, visita sus gimnasios afiliados y lleva HYROX directamente a sus comunidades — con coaches certificados, embajadores y el estándar de una carrera internacional.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-n">01</div>
+        <div class="pillar-title">Más atletas</div>
+        <div class="pillar-body">Cada gym visitado es una fuente directa de corredores. El Tour convierte comunidades de entrenamiento en participantes de carrera.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">02</div>
+        <div class="pillar-title">Relaciones reales</div>
+        <div class="pillar-body">No venimos a dar una clase y salir. Construimos relaciones con dueños y coaches que duran toda la temporada.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">03</div>
+        <div class="pillar-title">Red de afiliados</div>
+        <div class="pillar-body">Los gyms que viven el Tour de cerca tienen la tasa de conversión más alta hacia la afiliación HTC.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">04</div>
+        <div class="pillar-title">Voluntarios y Crew</div>
+        <div class="pillar-body">Cada carrera necesita más de 200 voluntarios por día. El Gym Tour es el canal más eficiente de reclutamiento de Crew.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">05</div>
+        <div class="pillar-title">Educación en campo</div>
+        <div class="pillar-body">Atletas que entienden el Rulebook y la experiencia de carrera llegan más preparados y reducen la carga operativa del evento.</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-n">06</div>
+        <div class="pillar-title">Contenido aspiracional</div>
+        <div class="pillar-body">El Tour debe verse como un lugar donde todos quieren estar. El contenido generado en cada ciudad posiciona a HYROX como un movimiento.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CALENDARIO PREVIEW -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">Temporada 26/27</div>
+    <h2 class="section-title">El calendario</h2>
+    <p class="section-body">12 ciudades. Julio 2026 a Mayo 2027. Cada tour diseñado para maximizar el impacto en su región.</p>
+
+    <div class="cal-grid">
+      <a class="cal-card" href="calendario.html">
+        <div class="cal-num">GT 01</div>
+        <div class="cal-city">Acapulco</div>
+        <div class="cal-date">Mié 15 – Dom 19 Jul 2026</div>
+        <div class="cal-tag carrera">Ciudad Carrera</div>
+      </a>
+      <a class="cal-card" href="calendario.html">
+        <div class="cal-num">GT 02</div>
+        <div class="cal-city">Querétaro</div>
+        <div class="cal-date">Mié 26 – Dom 30 Ago 2026</div>
+        <div class="cal-tag">Ciudad Libre</div>
+      </a>
+      <a class="cal-card" href="calendario.html">
+        <div class="cal-num">GT 03</div>
+        <div class="cal-city">León</div>
+        <div class="cal-date">Mié 16 – Dom 20 Sep 2026</div>
+        <div class="cal-tag">Ciudad Libre</div>
+      </a>
+      <a class="cal-card" href="calendario.html">
+        <div class="cal-num">GT 04</div>
+        <div class="cal-city">Ciudad de México</div>
+        <div class="cal-date">Mar 29 Sep – Dom 4 Oct 2026</div>
+        <div class="cal-tag carrera">Ciudad Carrera · Extendido</div>
+      </a>
+      <a class="cal-card" href="calendario.html">
+        <div class="cal-num">GT 05</div>
+        <div class="cal-city">Tijuana</div>
+        <div class="cal-date">Mié 25 – Dom 29 Nov 2026</div>
+        <div class="cal-tag">Ciudad Libre</div>
+      </a>
+      <a class="cal-card" href="calendario.html">
+        <div class="cal-num">GT 06</div>
+        <div class="cal-city">Mérida</div>
+        <div class="cal-date">Mié 9 – Dom 13 Dic 2026</div>
+        <div class="cal-tag">Ciudad Libre</div>
+      </a>
+      <a class="cal-more" href="calendario.html">
+        <span class="cal-more-text">Ver calendario completo → 12 ciudades</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">Recursos</div>
+    <h2 class="section-title">¿Quién eres?</h2>
+    <p class="section-body">El Gym Tour tiene información específica para cada parte del ecosistema.</p>
+
+    <div class="split">
+      <a class="split-cell" href="gym-owners.html">
+        <div class="split-label">Gym Owners · HTC</div>
+        <div class="split-title">Eres dueño o director de un gym afiliado</div>
+        <div class="split-body">Todo lo que necesitas saber antes, durante y después del Gym Tour. Cómo preparar a tu equipo, reclutar voluntarios y sacarle el máximo a la visita.</div>
+        <div class="split-arrow">Ver playbook para Gym Owners →</div>
+      </a>
+      <a class="split-cell" href="staff.html">
+        <div class="split-label">Staff · Acceso restringido</div>
+        <div class="split-title">Eres parte del equipo HYROX Sports</div>
+        <div class="split-body">Playbook operativo completo del Gym Tour. Roles, agenda, protocolos, KPIs y todo lo que necesitas para operar en campo.</div>
+        <div class="split-arrow">Acceder con password →</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- EL EQUIPO -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-label">El equipo</div>
+    <h2 class="section-title">Quiénes están detrás</h2>
+    <p class="section-body">El equipo que opera el Gym Tour temporada 26/27.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">LE</div>
+        <div class="team-name">Luis Enrique Hernández</div>
+        <div class="team-role">Sports Director</div>
+        <a href="https://www.instagram.com/luisenriquehf/" target="_blank" class="team-ig">@luisenriquehf</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">LM</div>
+        <div class="team-name">Liz Medellín</div>
+        <div class="team-role">Race Director · Head of Training</div>
+        <a href="https://www.instagram.com/lizmedesp/" target="_blank" class="team-ig">@lizmedesp</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">AB</div>
+        <div class="team-name">Alan Benabib</div>
+        <div class="team-role">Marketing Director</div>
+        <a href="https://www.instagram.com/alanbena/" target="_blank" class="team-ig">@alanbena</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">AP</div>
+        <div class="team-name">Andy Barbosa</div>
+        <div class="team-role">Affiliate Success Manager</div>
+        <a href="https://www.instagram.com/andreapbss/" target="_blank" class="team-ig">@andreapbss</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">MG</div>
+        <div class="team-name">Mariann González</div>
+        <div class="team-role">Lead Coach</div>
+        <a href="https://www.instagram.com/marianngzz/" target="_blank" class="team-ig">@marianngzz</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">FP</div>
+        <div class="team-name">Fer Peña</div>
+        <div class="team-role">Lead Coach</div>
+        <a href="https://www.instagram.com/mfliekens/" target="_blank" class="team-ig">@mfliekens</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">CL</div>
+        <div class="team-name">Cami Lozada</div>
+        <div class="team-role">Lead Coach</div>
+        <a href="https://www.instagram.com/camillelozada_/" target="_blank" class="team-ig">@camillelozada_</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">MU</div>
+        <div class="team-name">Maria Urias</div>
+        <div class="team-role">Lead Coach</div>
+        <a href="https://www.instagram.com/mariauriass/" target="_blank" class="team-ig">@mariauriass</a>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">KM</div>
+        <div class="team-name">Kiara Margutti</div>
+        <div class="team-role">Lead Coach</div>
+        <a href="https://www.instagram.com/kiaramargutti/" target="_blank" class="team-ig">@kiaramargutti</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="cta-label">Siguiente paso</div>
+  <h2 class="cta-title">¿Tu gym es parte del Tour?</h2>
+  <p class="cta-sub">Si tu gym está afiliado a HYROX México, el Gym Tour viene a ti. Revisa el calendario y prepara a tu equipo.</p>
+  <div class="cta-buttons">
+    <a href="calendario.html" class="btn-primary">Ver calendario</a>
+    <a href="gym-owners.html" class="btn-secondary">Playbook para Gym Owners</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">HYROX Gym Tour MX</div>
+  <ul class="footer-links">
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html">Gym Owners</a></li>
+    <li><a href="equipo.html">Equipo</a></li>
+    <li><a href="staff.html">Staff</a></li>
+  </ul>
+  <div class="footer-note">Temporada 26/27 · HYROX México</div>
+</footer>
+
+</body>
+</html>
