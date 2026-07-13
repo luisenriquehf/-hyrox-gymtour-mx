@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym Tour Acapulco — GT01 · T26/27</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --bone:#EDE8E1; --bk:#0A0A0A; --wh:#F8F5F0; --gl:#888; --gl2:#555; --bd:rgba(0,0,0,0.10); }
+html { scroll-behavior: smooth; }
+body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: rgba(237,232,225,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--bd); }
+.nav-logo { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bk); text-decoration: none; line-height: 1; }
+.nav-logo span { display: block; font-weight: 300; font-size: 9px; letter-spacing: 4px; color: var(--gl); margin-top: 2px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--bk); }
+
+/* HERO */
+.hero { min-height: 100vh; padding: 56px 48px 0; display: grid; grid-template-rows: 1fr auto; border-bottom: 1px solid var(--bd); }
+.hero-top { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 48px; padding-top: 80px; }
+.hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gl); }
+.hero-wm { font-size: clamp(72px, 13vw, 160px); font-weight: 900; line-height: 0.88; letter-spacing: -1px; text-transform: uppercase; color: var(--bk); margin-bottom: 28px; }
+.hero-wm em { display: block; font-style: normal; font-weight: 300; font-size: clamp(24px, 4vw, 48px); letter-spacing: 8px; color: var(--gl); margin-top: 8px; }
+.hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding: 28px 0; border-top: 1px solid var(--bd); flex-wrap: wrap; }
+.hero-desc { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 440px; line-height: 1.85; }
+.hero-meta { display: flex; gap: 32px; flex-shrink: 0; flex-wrap: wrap; }
+.meta-item { }
+.meta-n { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--bk); text-transform: uppercase; }
+.meta-l { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); margin-top: 2px; }
+
+/* TICKER */
+.ticker { overflow: hidden; padding: 11px 0; background: var(--bk); }
+.ticker-inner { display: flex; animation: tick 20s linear infinite; width: max-content; }
+.ticker-item { display: flex; align-items: center; gap: 14px; padding: 0 24px; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--bone); white-space: nowrap; opacity: 0.6; }
+.ticker-item.hi { opacity: 1; }
+.ticker-item span { width: 3px; height: 3px; background: rgba(237,232,225,0.3); border-radius: 50%; }
+@keyframes tick { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+/* SECTIONS */
+.section { padding: 80px 48px; border-bottom: 1px solid var(--bd); }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.slabel { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 36px; display: flex; align-items: center; gap: 14px; }
+.slabel::after { content: ''; flex: 1; height: 1px; background: var(--bd); }
+.sh { font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.0; text-transform: uppercase; color: var(--bk); margin-bottom: 16px; }
+.sb { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 560px; line-height: 1.85; }
+
+/* ITINERARY */
+.itin { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.itin-day { background: var(--bone); padding: 0; transition: background 0.15s; }
+.itin-day:hover { background: var(--wh); }
+.itin-header { padding: 20px 28px 16px; border-bottom: 1px solid var(--bd); }
+.itin-date { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 4px; }
+.itin-city { font-size: 20px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.3px; color: var(--bk); }
+.itin-slots { padding: 16px 28px 24px; display: flex; flex-direction: column; gap: 10px; }
+.itin-slot { display: flex; align-items: flex-start; gap: 14px; }
+.itin-slot-time { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); flex-shrink: 0; width: 24px; padding-top: 2px; }
+.itin-slot-body { }
+.itin-slot-title { font-size: 13px; font-weight: 600; color: var(--bk); }
+.itin-slot-loc { font-size: 11px; font-weight: 300; color: var(--gl); margin-top: 1px; }
+.itin-special { background: var(--bk); }
+.itin-special:hover { background: #111; }
+.itin-special .itin-date { color: rgba(237,232,225,0.4); }
+.itin-special .itin-city { color: var(--bone); }
+.itin-special .itin-header { border-bottom-color: rgba(255,255,255,0.06); }
+.itin-special .itin-slot-time { color: rgba(237,232,225,0.35); }
+.itin-special .itin-slot-title { color: var(--bone); }
+.itin-special .itin-slot-loc { color: rgba(237,232,225,0.4); }
+
+/* INFO GRID */
+.info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.info-cell { background: var(--bone); padding: 32px 28px; transition: background 0.15s; }
+.info-cell:hover { background: var(--wh); }
+.info-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 12px; }
+.info-t { font-size: 15px; font-weight: 700; text-transform: uppercase; color: var(--bk); margin-bottom: 8px; }
+.info-b { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.65; }
+
+/* STATEMENT */
+.statement { padding: 72px 48px; border-bottom: 1px solid var(--bd); background: var(--bk); }
+.statement-q { font-size: clamp(20px, 3vw, 34px); font-weight: 900; line-height: 1.15; text-transform: uppercase; color: var(--bone); max-width: 700px; border-left: 2px solid var(--bone); padding-left: 28px; }
+.statement-sub { font-size: 11px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: rgba(237,232,225,0.3); margin-top: 18px; padding-left: 30px; }
+
+/* CTA */
+.cta-section { padding: 80px 48px; text-align: center; }
+.cta-label { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 16px; }
+.cta-title { font-size: clamp(26px, 4vw, 48px); font-weight: 900; text-transform: uppercase; color: var(--bk); margin-bottom: 14px; line-height: 1; }
+.cta-sub { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 400px; margin: 0 auto 36px; line-height: 1.7; }
+.cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-p { display: inline-block; padding: 15px 36px; background: var(--bk); color: var(--bone); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+.btn-p:hover { opacity: 0.8; }
+.btn-s { display: inline-block; padding: 15px 36px; background: transparent; color: var(--gl2); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; border: 1px solid var(--bd); transition: all 0.2s; }
+.btn-s:hover { border-color: var(--bk); color: var(--bk); }
+
+footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: var(--bk); }
+.f-brand { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bone); }
+.f-brand span { font-weight: 300; font-size: 9px; letter-spacing: 4px; color: rgba(237,232,225,0.3); display: block; margin-top: 2px; }
+.f-links { display: flex; gap: 20px; list-style: none; }
+.f-links a { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.35); text-decoration: none; transition: color 0.2s; }
+.f-links a:hover { color: var(--bone); }
+
+@media(max-width:768px){
+  .nav { padding: 0 20px; } .nav-links { display: none; }
+  .hero, .section, .statement, .cta-section { padding-left: 24px; padding-right: 24px; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+  .itin { grid-template-columns: 1fr; }
+  .info-grid { grid-template-columns: 1fr; }
+  footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Gym Tour<span>México · T26/27</span></a>
+  <ul class="nav-links">
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html">Soy Gym Owner</a></li>
+    <li><a href="atletas.html">Soy Atleta</a></li>
+    <li><a href="equipo.html">El Equipo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-eyebrow">GT 01 · Temporada 26/27</div>
+    <div class="hero-wm">
+      Acapulco
+      <em>Cuernavaca + Acapulco · Guerrero</em>
+    </div>
+    <div class="hero-bottom">
+      <p class="hero-desc">La primera parada de la temporada. El Gym Tour arranca en el sur — con una parada técnica en Cuernavaca de camino a Acapulco. Cuatro días de visitas a gyms afiliados, clases en formato HYROX y una comida de cierre para la comunidad.</p>
+      <div class="hero-meta">
+        <div class="meta-item">
+          <div class="meta-n">Mié 15 – Dom 18 Jul</div>
+          <div class="meta-l">Fechas del Tour</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-n">2 Ciudades</div>
+          <div class="meta-l">Cuernavaca · Acapulco</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-n">GT 01</div>
+          <div class="meta-l">Primera parada</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <div class="ticker-item hi"><span></span>GT 01 · Acapulco</div>
+    <div class="ticker-item"><span></span>15–18 Jul 2026</div>
+    <div class="ticker-item"><span></span>Cuernavaca</div>
+    <div class="ticker-item"><span></span>Acapulco</div>
+    <div class="ticker-item"><span></span>Guerrero</div>
+    <div class="ticker-item"><span></span>Temporada 26/27</div>
+    <div class="ticker-item hi"><span></span>GT 01 · Acapulco</div>
+    <div class="ticker-item"><span></span>15–18 Jul 2026</div>
+    <div class="ticker-item"><span></span>Cuernavaca</div>
+    <div class="ticker-item"><span></span>Acapulco</div>
+    <div class="ticker-item"><span></span>Guerrero</div>
+    <div class="ticker-item"><span></span>Temporada 26/27</div>
+  </div>
+</div>
+
+<!-- ITINERARIO -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Itinerario</div>
+    <h2 class="sh">4 días · 2 ciudades.</h2>
+    <p class="sb">El Tour arranca en Cuernavaca y se mueve a Acapulco. Visitas a gyms afiliados, clases en formato HYROX y un cierre que vale la pena esperar.</p>
+
+    <div class="itin">
+
+      <!-- Mié 15 -->
+      <div class="itin-day">
+        <div class="itin-header">
+          <div class="itin-date">Miércoles 15 de Julio</div>
+          <div class="itin-city">Cuernavaca</div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot">
+            <div class="itin-slot-time">PM</div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-loc">Cuernavaca, Morelos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Jue 16 -->
+      <div class="itin-day">
+        <div class="itin-header">
+          <div class="itin-date">Jueves 16 de Julio</div>
+          <div class="itin-city">Cuernavaca → Acapulco</div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot">
+            <div class="itin-slot-time">AM</div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-loc">Cuernavaca, Morelos</div>
+            </div>
+          </div>
+          <div class="itin-slot">
+            <div class="itin-slot-time">PM</div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-loc">Acapulco, Guerrero</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vie 17 -->
+      <div class="itin-day">
+        <div class="itin-header">
+          <div class="itin-date">Viernes 17 de Julio</div>
+          <div class="itin-city">Acapulco</div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot">
+            <div class="itin-slot-time">AM</div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-loc">Acapulco, Guerrero</div>
+            </div>
+          </div>
+          <div class="itin-slot">
+            <div class="itin-slot-time">PM</div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-loc">Acapulco, Guerrero</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sáb 18 — especial -->
+      <div class="itin-day itin-special">
+        <div class="itin-header">
+          <div class="itin-date">Sábado 18 de Julio</div>
+          <div class="itin-city">Acapulco</div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot">
+            <div class="itin-slot-time">AM</div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-loc">Acapulco, Guerrero</div>
+            </div>
+          </div>
+          <div class="itin-slot">
+            <div class="itin-slot-time">PM</div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Comida de cierre · Gym Owners</div>
+              <div class="itin-slot-loc">Acapulco · Restaurante por confirmar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dom 19 — Cuernavaca cierre -->
+      <div class="itin-day itin-special" style="grid-column: 1 / -1;">
+        <div class="itin-header">
+          <div class="itin-date">Domingo 19 de Julio</div>
+          <div class="itin-city">Cuernavaca</div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot">
+            <div class="itin-slot-time">PM</div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Comida de cierre · Gym Owners Cuernavaca</div>
+              <div class="itin-slot-loc">Cuernavaca, Morelos · Restaurante por confirmar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <div class="section-inner">
+    <blockquote class="statement-q">La primera parada siempre marca el tono de la temporada.</blockquote>
+    <p class="statement-sub">GT 01 · Acapulco · Julio 2026</p>
+  </div>
+</div>
+
+<!-- QUÉ ESPERAR -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Qué esperar</div>
+    <h2 class="sh">Lo que pasa<br>en cada visita.</h2>
+    <p class="sb">Cada visita a un gym afiliado sigue el mismo estándar HYROX — independientemente de la ciudad.</p>
+
+    <div class="info-grid">
+      <div class="info-cell">
+        <div class="info-n">La clase</div>
+        <div class="info-t">Formato HYROX en tu espacio</div>
+        <div class="info-b">Lead Coaches certificados conducen dos sesiones en formato HYROX adaptado al equipamiento de tu gym. Warm up, workout completo y cierre.</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">El Q&A</div>
+        <div class="info-t">Rulebook y experiencia de carrera</div>
+        <div class="info-b">Tus atletas resuelven dudas sobre el Rulebook, las estaciones, el proceso de check-in, las divisiones y todo lo que necesitan saber antes de su primera carrera.</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">El cierre</div>
+        <div class="info-t">Comunidad de gym owners</div>
+        <div class="info-b">El sábado cerramos con una comida para gym owners afiliados de la región — un espacio para conectar, compartir y construir la comunidad HYROX en el sur del país.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- GYMS ACAPULCO -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Gimnasios · Acapulco</div>
+    <h2 class="sh">Los gyms<br>que visitaremos.</h2>
+    <p class="sb">Estos son los gimnasios afiliados a HYROX en Acapulco que forman parte del GT01. El equipo los visita durante la semana del Tour.</p>
+
+    <div class="info-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); margin-top: 48px;">
+      <div class="info-cell">
+        <div class="info-n">Acapulco · 01</div>
+        <div class="info-t">Grupo Panther</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Acapulco · 02</div>
+        <div class="info-t">Vitality 744</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Acapulco · 03</div>
+        <div class="info-t">Kavanna Fitness Club</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Acapulco · 04</div>
+        <div class="info-t">Wyfit Acapulco</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Acapulco · 05</div>
+        <div class="info-t">Crossfit Lions</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Acapulco · 06</div>
+        <div class="info-t">Lobo Tea Fitness</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Acapulco · 07</div>
+        <div class="info-t">Ohana Crossfit</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Acapulco · 08</div>
+        <div class="info-t">Domum CrossFit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-label">GT 01 · Julio 2026</div>
+  <h2 class="cta-title">¿Tu gym está<br>en Cuernavaca o Acapulco?</h2>
+  <p class="cta-sub">Si eres gym owner afiliado a HYROX en la región, el Tour llega a ti. Si aún no eres HTC, este es el momento de conocernos.</p>
+  <div class="cta-btns">
+    <a href="gym-owners.html" class="btn-p">Soy Gym Owner</a>
+    <a href="calendario.html" class="btn-s">Ver calendario completo</a>
+  </div>
+</div>
+
+<footer>
+  <div class="f-brand">Gym Tour · Acapulco<span>GT01 · Temporada 26/27</span></div>
+  <ul class="f-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html">Gym Owners</a></li>
+    <li><a href="atletas.html">Atletas</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

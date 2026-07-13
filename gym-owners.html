@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym Owners — Gym Tour México T26/27</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --bone:#EDE8E1; --bk:#0A0A0A; --wh:#F8F5F0; --gl:#888; --gl2:#555; --bd:rgba(0,0,0,0.10); }
+html { scroll-behavior: smooth; }
+body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: rgba(237,232,225,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--bd); }
+.nav-logo { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bk); text-decoration: none; line-height: 1; }
+.nav-logo span { display: block; font-weight: 300; font-size: 9px; letter-spacing: 4px; color: var(--gl); margin-top: 2px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--bk); }
+
+.hero { padding: 120px 48px 72px; border-bottom: 1px solid var(--bd); }
+.hero-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: end; }
+.hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gl); }
+.hero-wm { font-size: clamp(56px, 9vw, 110px); font-weight: 900; line-height: 0.9; text-transform: uppercase; color: var(--bk); margin-bottom: 24px; letter-spacing: -1px; }
+.hero-wm em { display: block; font-style: normal; font-weight: 300; font-size: clamp(20px, 3vw, 36px); letter-spacing: 6px; color: var(--gl); margin-top: 8px; }
+.hero-desc { font-size: 15px; font-weight: 300; color: var(--gl2); line-height: 1.85; }
+.hero-pain { font-size: 18px; font-weight: 700; color: var(--bk); line-height: 1.4; margin-bottom: 20px; }
+.hero-pain em { font-style: italic; font-weight: 300; color: var(--gl2); display: block; font-size: 15px; margin-top: 8px; }
+
+.section { padding: 80px 48px; border-bottom: 1px solid var(--bd); }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.slabel { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 36px; display: flex; align-items: center; gap: 14px; }
+.slabel::after { content: ''; flex: 1; height: 1px; background: var(--bd); }
+.sh { font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.0; text-transform: uppercase; color: var(--bk); margin-bottom: 16px; }
+.sb { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 560px; line-height: 1.85; }
+
+/* BENEFITS */
+.benefits { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.benefit { background: var(--bone); padding: 36px 32px; transition: background 0.15s; }
+.benefit:hover { background: var(--wh); }
+.benefit-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 12px; }
+.benefit-t { font-size: 18px; font-weight: 700; text-transform: uppercase; color: var(--bk); margin-bottom: 10px; letter-spacing: 0.3px; }
+.benefit-b { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.7; }
+
+/* EXCLUSIVIDAD */
+.excl { background: var(--bk); padding: 56px 48px; border-bottom: 1px solid var(--bd); }
+.excl-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.excl-title { font-size: clamp(28px, 4vw, 48px); font-weight: 900; text-transform: uppercase; color: var(--bone); line-height: 1.0; margin-bottom: 20px; }
+.excl-body { font-size: 14px; font-weight: 300; color: rgba(237,232,225,0.6); line-height: 1.85; }
+.excl-tag { display: inline-block; border: 1px solid rgba(237,232,225,0.2); padding: 6px 14px; font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(237,232,225,0.5); margin-bottom: 24px; }
+.excl-stats { display: flex; flex-direction: column; gap: 24px; }
+.excl-stat { border-top: 1px solid rgba(237,232,225,0.08); padding-top: 20px; }
+.excl-stat-n { font-size: 44px; font-weight: 900; color: var(--bone); line-height: 1; }
+.excl-stat-l { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.4); margin-top: 4px; }
+
+/* CÓMO FUNCIONA */
+.steps { display: flex; flex-direction: column; margin-top: 48px; }
+.step { display: grid; grid-template-columns: 56px 1fr; gap: 24px; padding: 28px 0; border-top: 1px solid var(--bd); align-items: start; }
+.step-n { font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 900; color: rgba(0,0,0,0.08); line-height: 1; padding-top: 4px; }
+.step-t { font-size: 14px; font-weight: 600; color: var(--bk); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.5px; }
+.step-b { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.7; }
+
+/* CREW */
+.crew-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.crew-cell { background: var(--bone); padding: 32px 28px; }
+.crew-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 10px; }
+.crew-t { font-size: 16px; font-weight: 700; text-transform: uppercase; color: var(--bk); margin-bottom: 8px; }
+.crew-b { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.65; }
+
+/* CTA */
+.cta-section { padding: 80px 48px; text-align: center; }
+.cta-label { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 16px; }
+.cta-title { font-size: clamp(28px, 4vw, 48px); font-weight: 900; text-transform: uppercase; color: var(--bk); margin-bottom: 14px; line-height: 1; }
+.cta-sub { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 420px; margin: 0 auto 36px; line-height: 1.7; }
+.cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-p { display: inline-block; padding: 15px 36px; background: var(--bk); color: var(--bone); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+.btn-p:hover { opacity: 0.8; }
+.btn-s { display: inline-block; padding: 15px 36px; background: transparent; color: var(--gl2); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; border: 1px solid var(--bd); transition: all 0.2s; }
+.btn-s:hover { border-color: var(--bk); color: var(--bk); }
+
+footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: var(--bk); }
+.f-brand { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bone); }
+.f-brand span { font-weight: 300; font-size: 9px; letter-spacing: 4px; color: rgba(237,232,225,0.3); display: block; margin-top: 2px; }
+.f-links { display: flex; gap: 20px; list-style: none; }
+.f-links a { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.35); text-decoration: none; transition: color 0.2s; }
+.f-links a:hover { color: var(--bone); }
+
+@media(max-width:768px){
+  .nav { padding: 0 20px; } .nav-links { display: none; }
+  .hero { padding: 100px 24px 56px; }
+  .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+  .section { padding: 56px 24px; }
+  .excl { padding: 56px 24px; }
+  .excl-inner { grid-template-columns: 1fr; gap: 40px; }
+  .benefits, .crew-grid { grid-template-columns: 1fr; }
+  .cta-section { padding: 56px 24px; }
+  footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Gym Tour<span>México · T26/27</span></a>
+  <ul class="nav-links">
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html" class="active">Soy Gym Owner</a></li>
+    <li><a href="atletas.html">Soy Atleta</a></li>
+    <li><a href="equipo.html">El Equipo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Para Gym Owners · Afiliados HTC</div>
+      <div class="hero-wm">Tu gym.<br>En el centro<br>de HYROX.
+        <em>México · T26/27</em>
+      </div>
+    </div>
+    <div>
+      <div class="hero-pain">
+        ¿Cómo hago que mi gym crezca y se diferencie?
+        <em>"Quiero traer más clientes, generar contenido de valor y conectarme con algo más grande que mi propio espacio."</em>
+      </div>
+      <p class="hero-desc">Si tu gym está afiliado a HYROX México, el Gym Tour es uno de los beneficios más exclusivos de tu membresía. El equipo de HYROX llega a tu espacio, activa a tu comunidad y conecta a tu gym con el ecosistema HYROX a nivel nacional.</p>
+    </div>
+  </div>
+</div>
+
+<!-- BENEFICIOS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Por qué vale la pena</div>
+    <h2 class="sh">Lo que el Gym Tour<br>hace por tu gym.</h2>
+    <p class="sb">Ser visitado por el Gym Tour no es solo una clase — es una activación completa que deja huella en tu comunidad.</p>
+
+    <div class="benefits">
+      <div class="benefit">
+        <div class="benefit-n">01 · Visibilidad</div>
+        <div class="benefit-t">Tu gym en la conversación nacional</div>
+        <div class="benefit-b">El Tour genera contenido en cada ciudad. Tu gym, tus coaches y tus atletas forman parte de la narrativa de HYROX México — en redes, en comunidad y en el ecosistema del deporte.</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-n">02 · Comunidad</div>
+        <div class="benefit-t">Nuevas personas en tu espacio</div>
+        <div class="benefit-b">Las clases del Gym Tour atraen a atletas de toda la región que quieren vivir HYROX en un gym afiliado. Es una oportunidad real de que nuevas personas conozcan tu espacio y lo que haces.</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-n">03 · Conocimiento</div>
+        <div class="benefit-t">Perspectivas que mueven negocios</div>
+        <div class="benefit-b">El cierre del Tour reúne a gym owners de toda la región. Las conversaciones sobre gestión, retención, comunidad y crecimiento que pasan en esos encuentros no las encuentras en ningún otro lado.</div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-n">04 · Preparación</div>
+        <div class="benefit-t">Tus atletas llegan listos a la carrera</div>
+        <div class="benefit-b">Los Lead Coaches de HYROX enseñan el Rulebook, las estaciones y la experiencia de carrera directamente a tus atletas. Llegan a la línea de salida sabiendo exactamente qué les espera.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXCLUSIVIDAD -->
+<div class="excl">
+  <div class="excl-inner">
+    <div>
+      <div class="excl-tag">Solo para afiliados HTC</div>
+      <div class="excl-title">Estar afiliado tiene este nivel.</div>
+      <p class="excl-body">El Gym Tour visita a los gimnasios afiliados a HYROX México. No es un evento abierto a cualquier gym — es un beneficio exclusivo de tu membresía HTC. Cada visita es un reconocimiento a tu compromiso con el ecosistema HYROX y una inversión directa en tu comunidad.</p>
+      <br><br>
+      <p class="excl-body">¿Tu gym aún no está afiliado y quieres ser parte? El Gym Tour también es la oportunidad de conocer de primera mano lo que significa ser un HTC — y dar ese siguiente paso.</p>
+    </div>
+    <div class="excl-stats">
+      <div class="excl-stat">
+        <div class="excl-stat-n">11</div>
+        <div class="excl-stat-l">Paradas en la temporada 26/27 — y seguimos sumando ciudades</div>
+      </div>
+      <div class="excl-stat">
+        <div class="excl-stat-n">232</div>
+        <div class="excl-stat-l">Gimnasios afiliados HTC en México esta temporada</div>
+      </div>
+      <div class="excl-stat">
+        <div class="excl-stat-n">17,400</div>
+        <div class="excl-stat-l">Personas alcanzadas en toda la temporada</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CÓMO FUNCIONA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Cómo funciona</div>
+    <h2 class="sh">Qué pasa antes,<br>durante y después.</h2>
+    <p class="sb">El Gym Tour llega coordinado con tu equipo. Así es el proceso.</p>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div>
+          <div class="step-t">Contacto previo con tu gym</div>
+          <div class="step-b">El equipo de HYROX se pone en contacto contigo semanas antes del Tour para coordinar horarios, equipamiento y lo que necesitas preparar. Todo llega claro y con tiempo.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div>
+          <div class="step-t">La visita — clases en tu espacio</div>
+          <div class="step-b">Un Lead Coach y un miembro del equipo llegan a tu gym. Dan dos clases en formato HYROX y abren el Q&A para tus atletas. Tú y tu equipo son los anfitriones.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div>
+          <div class="step-t">El cierre del Tour</div>
+          <div class="step-b">El último día del Gym Tour en cada ciudad se convierte en un evento para toda la comunidad de la región — simulaciones, talleres, networking y comida para gym owners afiliados.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div>
+          <div class="step-t">Tus clientes como Crew</div>
+          <div class="step-b">El Tour es el momento ideal para que tus atletas se registren como voluntarios en la próxima carrera HYROX. El equipo los orienta en todo el proceso durante las clases.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREW -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Crew y voluntarios</div>
+    <h2 class="sh">Tus clientes,<br>en la carrera.</h2>
+    <p class="sb">Uno de los objetivos del Gym Tour es conectar a tus atletas con el Crew de HYROX. Participar como voluntario es vivir una carrera desde adentro — y tiene beneficios reales.</p>
+
+    <div class="crew-grid">
+      <div class="crew-cell">
+        <div class="crew-n">1 turno completado</div>
+        <div class="crew-t">50% de descuento</div>
+        <div class="crew-b">Tu atleta completa un turno como Crew y recibe el 50% de descuento en su inscripción a cualquier carrera HYROX México. Vigencia de un año, intransferible.</div>
+      </div>
+      <div class="crew-cell">
+        <div class="crew-n">2 o más turnos</div>
+        <div class="crew-t">Inscripción gratuita</div>
+        <div class="crew-b">Con dos turnos completados, tu atleta corre HYROX gratis. Además: playera oficial, snacks durante el evento, $300 MXN en tienda Puma y el cierre de evento.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-label">¿Listo para el Tour?</div>
+  <h2 class="cta-title">Encuentra tu ciudad<br>en el calendario.</h2>
+  <p class="cta-sub">Revisa cuándo llega el Gym Tour a tu ciudad y prepara a tu equipo para recibirlo.</p>
+  <div class="cta-btns">
+    <a href="calendario.html" class="btn-p">Ver calendario completo</a>
+    <a href="atletas.html" class="btn-s">Soy atleta</a>
+  </div>
+</div>
+
+<footer>
+  <div class="f-brand">Gym Tour<span>México · Temporada 26/27</span></div>
+  <ul class="f-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="atletas.html">Atletas</a></li>
+    <li><a href="equipo.html">Equipo</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

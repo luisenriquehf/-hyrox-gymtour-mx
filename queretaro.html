@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym Tour Querétaro — GT02 · Lanzamiento T26/27</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --bone:#EDE8E1; --bk:#0A0A0A; --wh:#F8F5F0; --gl:#888; --gl2:#555; --bd:rgba(0,0,0,0.10); }
+html { scroll-behavior: smooth; }
+body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: rgba(237,232,225,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--bd); }
+.nav-logo { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bk); text-decoration: none; line-height: 1; }
+.nav-logo span { display: block; font-weight: 300; font-size: 9px; letter-spacing: 4px; color: var(--gl); margin-top: 2px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--bk); }
+
+/* HERO */
+.hero { min-height: 100vh; padding: 56px 48px 0; display: grid; grid-template-rows: 1fr auto; border-bottom: 1px solid var(--bd); }
+.hero-top { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 48px; padding-top: 80px; }
+.hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gl); }
+.hero-wm { font-size: clamp(64px, 11vw, 140px); font-weight: 900; line-height: 0.88; letter-spacing: -1px; text-transform: uppercase; color: var(--bk); margin-bottom: 28px; }
+.hero-wm em { display: block; font-style: normal; font-weight: 300; font-size: clamp(20px, 3.5vw, 44px); letter-spacing: 8px; color: var(--gl); margin-top: 8px; }
+.hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding: 28px 0; border-top: 1px solid var(--bd); flex-wrap: wrap; }
+.hero-desc { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 440px; line-height: 1.85; }
+.hero-meta { display: flex; gap: 32px; flex-shrink: 0; flex-wrap: wrap; }
+.meta-n { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--bk); text-transform: uppercase; }
+.meta-l { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); margin-top: 2px; }
+
+/* LAUNCH BANNER */
+.launch { background: var(--bk); padding: 32px 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.launch-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.launch-label { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: rgba(237,232,225,0.4); margin-bottom: 6px; }
+.launch-text { font-size: clamp(16px, 2.5vw, 22px); font-weight: 900; text-transform: uppercase; color: var(--bone); letter-spacing: 0.5px; }
+.launch-tag { display: inline-block; border: 1px solid rgba(237,232,225,0.2); padding: 8px 20px; font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: rgba(237,232,225,0.5); flex-shrink: 0; }
+
+/* SECTIONS */
+.section { padding: 80px 48px; border-bottom: 1px solid var(--bd); }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.slabel { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 36px; display: flex; align-items: center; gap: 14px; }
+.slabel::after { content: ''; flex: 1; height: 1px; background: var(--bd); }
+.sh { font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.0; text-transform: uppercase; color: var(--bk); margin-bottom: 16px; }
+.sb { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 560px; line-height: 1.85; }
+
+/* ITINERARY */
+.itin { display: flex; flex-direction: column; margin-top: 48px; border: 1px solid var(--bd); }
+.itin-day { border-bottom: 1px solid var(--bd); }
+.itin-day:last-child { border-bottom: none; }
+.itin-header { display: grid; grid-template-columns: 180px 1fr; border-bottom: 1px solid var(--bd); }
+.itin-date-block { padding: 20px 24px; border-right: 1px solid var(--bd); background: var(--bk); }
+.itin-date { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.4); margin-bottom: 4px; }
+.itin-city { font-size: 16px; font-weight: 900; text-transform: uppercase; color: var(--bone); letter-spacing: 0.3px; }
+.itin-badge { display: inline-block; margin-top: 8px; font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 3px 8px; border: 1px solid rgba(237,232,225,0.15); color: rgba(237,232,225,0.4); }
+.itin-badge.launch { border-color: rgba(237,232,225,0.3); color: rgba(237,232,225,0.7); }
+.itin-day-label { padding: 20px 24px; display: flex; align-items: center; }
+.itin-day-name { font-size: 13px; font-weight: 300; color: var(--gl2); }
+.itin-slots { display: flex; flex-direction: column; }
+.itin-slot { display: grid; grid-template-columns: 180px 1fr; border-bottom: 1px solid var(--bd); min-height: 52px; transition: background 0.15s; }
+.itin-slot:last-child { border-bottom: none; }
+.itin-slot:hover { background: var(--wh); }
+.itin-slot-time { padding: 14px 24px; border-right: 1px solid var(--bd); display: flex; align-items: center; }
+.itin-time-tag { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); }
+.itin-slot-body { padding: 14px 24px; }
+.itin-slot-title { font-size: 13px; font-weight: 600; color: var(--bk); }
+.itin-slot-sub { font-size: 11px; font-weight: 300; color: var(--gl); margin-top: 2px; }
+.itin-slot.special { background: rgba(0,0,0,0.02); }
+.itin-slot.special .itin-slot-title { font-weight: 700; }
+.itin-slot.highlight .itin-slot-title { color: var(--bk); }
+.itin-slot.highlight .itin-time-tag { color: var(--bk); }
+
+/* SPECIAL BLOCKS */
+.special-block { background: var(--bk); padding: 48px; border-bottom: 1px solid var(--bd); }
+.special-block-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+.sb-label { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: rgba(237,232,225,0.35); margin-bottom: 16px; }
+.sb-title { font-size: clamp(24px, 3.5vw, 40px); font-weight: 900; text-transform: uppercase; color: var(--bone); line-height: 1.0; margin-bottom: 16px; }
+.sb-body { font-size: 14px; font-weight: 300; color: rgba(237,232,225,0.55); line-height: 1.85; }
+.sb-items { display: flex; flex-direction: column; gap: 0; }
+.sb-item { padding: 16px 0; border-top: 1px solid rgba(237,232,225,0.06); display: flex; align-items: flex-start; gap: 16px; }
+.sb-item-n { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.25); flex-shrink: 0; width: 24px; padding-top: 2px; }
+.sb-item-t { font-size: 13px; font-weight: 500; color: var(--bone); margin-bottom: 3px; }
+.sb-item-b { font-size: 12px; font-weight: 300; color: rgba(237,232,225,0.45); line-height: 1.5; }
+
+/* SIMULACION */
+.sim { border: 1px solid var(--bd); margin-top: 48px; overflow: hidden; }
+.sim-header { background: var(--bk); padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; }
+.sim-title { font-size: 22px; font-weight: 900; text-transform: uppercase; color: var(--bone); }
+.sim-tag { font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; border: 1px solid rgba(237,232,225,0.2); padding: 5px 12px; color: rgba(237,232,225,0.5); }
+.sim-body { padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+.sim-detail-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); margin-bottom: 6px; }
+.sim-detail-val { font-size: 15px; font-weight: 600; color: var(--bk); }
+.sim-detail-sub { font-size: 12px; font-weight: 300; color: var(--gl); margin-top: 3px; }
+
+/* INFO GRID */
+.info-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.info-cell { background: var(--bone); padding: 32px 28px; transition: background 0.15s; }
+.info-cell:hover { background: var(--wh); }
+.info-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 12px; }
+.info-t { font-size: 15px; font-weight: 700; text-transform: uppercase; color: var(--bk); margin-bottom: 8px; }
+.info-b { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.65; }
+
+/* STATEMENT */
+.statement { padding: 72px 48px; border-bottom: 1px solid var(--bd); background: var(--bk); }
+.statement-inner { max-width: 1100px; margin: 0 auto; }
+.statement-q { font-size: clamp(20px, 3vw, 34px); font-weight: 900; line-height: 1.15; text-transform: uppercase; color: var(--bone); max-width: 700px; border-left: 2px solid var(--bone); padding-left: 28px; }
+.statement-sub { font-size: 11px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: rgba(237,232,225,0.3); margin-top: 18px; padding-left: 30px; }
+
+/* CTA */
+.cta-section { padding: 80px 48px; text-align: center; }
+.cta-label { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 16px; }
+.cta-title { font-size: clamp(26px, 4vw, 48px); font-weight: 900; text-transform: uppercase; color: var(--bk); margin-bottom: 14px; line-height: 1; }
+.cta-sub { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 380px; margin: 0 auto 36px; line-height: 1.7; }
+.cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-p { display: inline-block; padding: 15px 36px; background: var(--bk); color: var(--bone); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+.btn-p:hover { opacity: 0.8; }
+.btn-s { display: inline-block; padding: 15px 36px; background: transparent; color: var(--gl2); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; border: 1px solid var(--bd); transition: all 0.2s; }
+.btn-s:hover { border-color: var(--bk); color: var(--bk); }
+
+footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: var(--bk); }
+.f-brand { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bone); }
+.f-brand span { font-weight: 300; font-size: 9px; letter-spacing: 4px; color: rgba(237,232,225,0.3); display: block; margin-top: 2px; }
+.f-links { display: flex; gap: 20px; list-style: none; }
+.f-links a { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.35); text-decoration: none; transition: color 0.2s; }
+.f-links a:hover { color: var(--bone); }
+
+@media(max-width:768px){
+  .nav { padding: 0 20px; } .nav-links { display: none; }
+  .hero, .section, .statement, .cta-section { padding-left: 24px; padding-right: 24px; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+  .launch { padding: 24px; }
+  .itin-header, .itin-slot { grid-template-columns: 100px 1fr; }
+  .special-block { padding: 32px 24px; }
+  .special-block-inner { grid-template-columns: 1fr; gap: 32px; }
+  .info-grid { grid-template-columns: 1fr; }
+  .sim-body { grid-template-columns: 1fr; }
+  footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Gym Tour<span>México · T26/27</span></a>
+  <ul class="nav-links">
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html">Soy Gym Owner</a></li>
+    <li><a href="atletas.html">Soy Atleta</a></li>
+    <li><a href="equipo.html">El Equipo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-eyebrow">GT 02 · Temporada 26/27 · Lanzamiento</div>
+    <div class="hero-wm">
+      Querétaro
+      <em>Querétaro · Agosto 2026</em>
+    </div>
+    <div class="hero-bottom">
+      <p class="hero-desc">La segunda parada de la temporada es la más especial. Querétaro es donde el Gym Tour se lanza oficialmente — donde el equipo arranca la temporada juntos, se presentan los uniformes y el Tour toma forma frente a la comunidad HYROX del Bajío.</p>
+      <div class="hero-meta">
+        <div>
+          <div class="meta-n">Mié 26 – Sáb 29 Ago</div>
+          <div class="meta-l">Fechas del Tour</div>
+        </div>
+        <div>
+          <div class="meta-n">GT 02</div>
+          <div class="meta-l">Segunda parada</div>
+        </div>
+        <div>
+          <div class="meta-n">Lanzamiento</div>
+          <div class="meta-l">Temporada 26/27</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LAUNCH BANNER -->
+<div class="launch">
+  <div class="launch-inner">
+    <div>
+      <div class="launch-label">Evento especial</div>
+      <div class="launch-text">Lanzamiento oficial del Gym Tour México T26/27</div>
+    </div>
+    <div class="launch-tag">Querétaro · Agosto 2026</div>
+  </div>
+</div>
+
+<!-- ITINERARIO -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Itinerario</div>
+    <h2 class="sh">4 días · Una semana<br>que arranca todo.</h2>
+    <p class="sb">El GT Querétaro combina visitas a gyms afiliados, el lanzamiento del equipo de temporada y un cierre que conecta a toda la comunidad del Bajío.</p>
+
+    <div class="itin">
+
+      <!-- MIÉRCOLES -->
+      <div class="itin-day">
+        <div class="itin-header">
+          <div class="itin-date-block">
+            <div class="itin-date">Miércoles 26 Ago</div>
+            <div class="itin-city">Querétaro</div>
+            <div class="itin-badge launch">Lanzamiento</div>
+          </div>
+          <div class="itin-day-label">
+            <div class="itin-day-name">Día de apertura — Universidad y primer día de gyms</div>
+          </div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot">
+            <div class="itin-slot-time"><div class="itin-time-tag">AM</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Día Anáhuac · Universidad Anáhuac Querétaro</div>
+              <div class="itin-slot-sub">Activación HYROX en el evento más importante del campus · Querétaro</div>
+            </div>
+          </div>
+          <div class="itin-slot special">
+            <div class="itin-slot-time"><div class="itin-time-tag">MD</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Lanzamiento del equipo — Bloque 1 · 12:00–15:00</div>
+              <div class="itin-slot-sub">Formación del equipo Gym Tour · Estándares de temporada · Con comida</div>
+            </div>
+          </div>
+          <div class="itin-slot">
+            <div class="itin-slot-time"><div class="itin-time-tag">PM</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-sub">Querétaro, Querétaro</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- JUEVES -->
+      <div class="itin-day">
+        <div class="itin-header">
+          <div class="itin-date-block">
+            <div class="itin-date">Jueves 27 Ago</div>
+            <div class="itin-city">Querétaro</div>
+          </div>
+          <div class="itin-day-label">
+            <div class="itin-day-name">Día completo de gyms y formación</div>
+          </div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot">
+            <div class="itin-slot-time"><div class="itin-time-tag">AM</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-sub">Querétaro, Querétaro</div>
+            </div>
+          </div>
+          <div class="itin-slot special">
+            <div class="itin-slot-time"><div class="itin-time-tag">MD</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Lanzamiento del equipo — Bloque 2 · 12:00–15:00</div>
+              <div class="itin-slot-sub">Formación del equipo Gym Tour · Estándares de temporada · Con comida</div>
+            </div>
+          </div>
+          <div class="itin-slot">
+            <div class="itin-slot-time"><div class="itin-time-tag">PM</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-sub">Querétaro, Querétaro</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- VIERNES -->
+      <div class="itin-day">
+        <div class="itin-header">
+          <div class="itin-date-block">
+            <div class="itin-date">Viernes 28 Ago</div>
+            <div class="itin-city">Querétaro</div>
+          </div>
+          <div class="itin-day-label">
+            <div class="itin-day-name">Último día de gyms y cierre con Gym Owners</div>
+          </div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot">
+            <div class="itin-slot-time"><div class="itin-time-tag">AM</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Visitas a gyms afiliados</div>
+              <div class="itin-slot-sub">Querétaro, Querétaro</div>
+            </div>
+          </div>
+          <div class="itin-slot special">
+            <div class="itin-slot-time"><div class="itin-time-tag">PM</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Team Building · Cervecería Cuatro Palos Dame</div>
+              <div class="itin-slot-sub">Querétaro · Equipo Gym Tour</div>
+            </div>
+          </div>
+          <div class="itin-slot highlight">
+            <div class="itin-slot-time"><div class="itin-time-tag">NOC</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Cena de cierre · Gym Owners Querétaro y región</div>
+              <div class="itin-slot-sub">Querétaro · Celaya · Irapuato y más · Por confirmar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SÁBADO -->
+      <div class="itin-day">
+        <div class="itin-header">
+          <div class="itin-date-block">
+            <div class="itin-date">Sábado 29 Ago</div>
+            <div class="itin-city">Querétaro</div>
+            <div class="itin-badge launch">Cierre oficial</div>
+          </div>
+          <div class="itin-day-label">
+            <div class="itin-day-name">Simulación HYROX abierta al público</div>
+          </div>
+        </div>
+        <div class="itin-slots">
+          <div class="itin-slot highlight">
+            <div class="itin-slot-time"><div class="itin-time-tag">AM</div></div>
+            <div class="itin-slot-body">
+              <div class="itin-slot-title">Simulación HYROX · Abierta al público · Querétaro</div>
+              <div class="itin-slot-sub">Costo de acceso por confirmar · Cierre oficial del GT02</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LANZAMIENTO -->
+<div class="special-block">
+  <div class="special-block-inner">
+    <div>
+      <div class="sb-label">Por qué Querétaro es diferente</div>
+      <div class="sb-title">El Tour arranca<br>desde aquí.</div>
+      <p class="sb-body">Querétaro no es una parada más. Es la ciudad donde el equipo del Gym Tour se reúne por primera vez en la temporada, presenta sus uniformes y define los estándares que marcarán las 10 paradas que siguen. Todo lo que el Tour será en T26/27 toma forma en estos 4 días.</p>
+    </div>
+    <div class="sb-items">
+      <div class="sb-item">
+        <div class="sb-item-n">01</div>
+        <div>
+          <div class="sb-item-t">Presentación del equipo</div>
+          <div class="sb-item-b">Los coaches, relationship leads y el equipo de Sports se reúnen para arrancar la temporada juntos. Uniformes, roles y visión de T26/27.</div>
+        </div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-item-n">02</div>
+        <div>
+          <div class="sb-item-t">Estándares de temporada</div>
+          <div class="sb-item-b">Rulebook, experiencia del corredor, proceso de Crew y todo lo que el equipo debe dominar antes de llegar a cada gym de México.</div>
+        </div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-item-n">03</div>
+        <div>
+          <div class="sb-item-t">Activación en Anáhuac Querétaro</div>
+          <div class="sb-item-b">El Tour arranca con presencia en el Día Anáhuac — el evento más importante del campus. La comunidad universitaria vive HYROX de primera mano.</div>
+        </div>
+      </div>
+      <div class="sb-item">
+        <div class="sb-item-n">04</div>
+        <div>
+          <div class="sb-item-t">Simulación pública de cierre</div>
+          <div class="sb-item-b">El sábado el Tour cierra con una simulación HYROX abierta a la comunidad de Querétaro. El primer gran evento público de la temporada.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- STATEMENT -->
+<div class="statement">
+  <div class="statement-inner">
+    <blockquote class="statement-q">Querétaro no es donde empezamos.<br>Es donde decidimos el nivel de la temporada.</blockquote>
+    <p class="statement-sub">GT 02 · Lanzamiento T26/27 · Agosto 2026</p>
+  </div>
+</div>
+
+<!-- QUÉ ESPERAR -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Qué pasa en Querétaro</div>
+    <h2 class="sh">Cinco días.<br>Todo en uno.</h2>
+    <p class="sb">El GT Querétaro combina lo que ninguna otra parada tiene — visitas a gyms, lanzamiento del equipo, activación universitaria, networking y simulación pública.</p>
+    <div class="info-grid">
+      <div class="info-cell">
+        <div class="info-n">Para los gyms</div>
+        <div class="info-t">Visitas a afiliados HTC</div>
+        <div class="info-b">El equipo visita los gimnasios afiliados de Querétaro durante toda la semana — miércoles, jueves y viernes. Clases en formato HYROX y Q&A abierto con los atletas.</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Para la comunidad</div>
+        <div class="info-t">Cena con Gym Owners del Bajío</div>
+        <div class="info-b">El viernes cerramos con una cena para gym owners de Querétaro y la región — Celaya, Irapuato y más. Una noche para conectar a los mejores operadores del Bajío.</div>
+      </div>
+      <div class="info-cell">
+        <div class="info-n">Para todos</div>
+        <div class="info-t">Simulación HYROX · Pública</div>
+        <div class="info-b">El sábado hacemos la primera simulación HYROX de la temporada, abierta al público. Una experiencia completa de carrera en Querétaro — sin necesitar ir a una carrera oficial.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-label">GT 02 · Agosto 2026</div>
+  <h2 class="cta-title">¿Eres de Querétaro<br>o del Bajío?</h2>
+  <p class="cta-sub">Si tu gym está afiliado a HYROX en la región, el Tour llega a ti esta semana. Y si quieres vivir la simulación del sábado, está abierta a todos.</p>
+  <div class="cta-btns">
+    <a href="gym-owners.html" class="btn-p">Soy Gym Owner</a>
+    <a href="calendario.html" class="btn-s">Ver calendario completo</a>
+  </div>
+</div>
+
+<footer>
+  <div class="f-brand">Gym Tour · Querétaro<span>GT02 · Lanzamiento · T26/27</span></div>
+  <ul class="f-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html">Gym Owners</a></li>
+    <li><a href="atletas.html">Atletas</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario — Gym Tour México T26/27</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --bone:#EDE8E1; --bk:#0A0A0A; --wh:#F8F5F0; --gl:#888; --gl2:#555; --bd:rgba(0,0,0,0.10); }
+html { scroll-behavior: smooth; }
+body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: rgba(237,232,225,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--bd); }
+.nav-logo { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bk); text-decoration: none; line-height: 1; }
+.nav-logo span { display: block; font-weight: 300; font-size: 9px; letter-spacing: 4px; color: var(--gl); margin-top: 2px; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover, .nav-links a.active { color: var(--bk); }
+
+/* HERO */
+.hero { padding: 120px 48px 72px; border-bottom: 1px solid var(--bd); }
+.hero-inner { max-width: 1100px; margin: 0 auto; }
+.hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gl); }
+.hero-wm { font-size: clamp(56px, 10vw, 120px); font-weight: 900; line-height: 0.9; text-transform: uppercase; color: var(--bk); margin-bottom: 24px; letter-spacing: -1px; }
+.hero-wm em { display: block; font-style: normal; font-weight: 300; font-size: clamp(18px, 3vw, 32px); letter-spacing: 8px; color: var(--gl); margin-top: 8px; }
+.hero-sub { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 500px; line-height: 1.85; margin-top: 20px; }
+
+/* LEGEND */
+.legend { display: flex; flex-wrap: wrap; gap: 16px; margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--bd); }
+.leg-item { display: flex; align-items: center; gap: 8px; font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); }
+.leg-dot { width: 8px; height: 8px; flex-shrink: 0; }
+.leg-dot.carrera { background: var(--bk); }
+.leg-dot.libre { border: 1px solid var(--gl); background: transparent; }
+.leg-dot.race { background: var(--bk); border-radius: 50%; }
+
+/* SECTION */
+.section { padding: 72px 48px; border-bottom: 1px solid var(--bd); }
+.section-inner { max-width: 1100px; margin: 0 auto; }
+.slabel { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 32px; display: flex; align-items: center; gap: 14px; }
+.slabel::after { content: ''; flex: 1; height: 1px; background: var(--bd); }
+
+/* CALENDAR TABLE */
+.cal-table { width: 100%; border-collapse: collapse; border: 1px solid var(--bd); }
+.cal-table thead tr { background: var(--bk); }
+.cal-table thead th { padding: 12px 20px; font-size: 9px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--bone); text-align: left; border-right: 1px solid rgba(255,255,255,0.06); }
+.cal-table thead th:last-child { border-right: none; }
+.cal-table tbody tr { border-bottom: 1px solid var(--bd); transition: background 0.15s; }
+.cal-table tbody tr:hover { background: var(--wh); }
+.cal-table tbody tr.month-row { background: transparent; }
+.cal-table tbody tr.month-row td { padding: 20px 20px 8px; font-size: 10px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); border-bottom: 1px solid var(--bd); }
+.cal-table tbody td { padding: 16px 20px; font-size: 13px; vertical-align: top; border-right: 1px solid var(--bd); }
+.cal-table tbody td:last-child { border-right: none; }
+.td-n { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--gl); }
+.td-city { font-size: 16px; font-weight: 900; text-transform: uppercase; color: var(--bk); margin-top: 2px; letter-spacing: 0.3px; }
+.td-sub { font-size: 11px; font-weight: 300; color: var(--gl); margin-top: 2px; }
+.td-date { font-size: 13px; font-weight: 300; color: var(--gl2); }
+.td-tag { display: inline-block; font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; border: 1px solid var(--bd); padding: 3px 8px; color: var(--gl); margin-top: 4px; }
+.td-tag.c { border-color: rgba(0,0,0,0.3); color: var(--bk); }
+.td-tag.race { background: var(--bk); color: var(--bone); border-color: var(--bk); }
+.td-link { display: inline-block; margin-top: 10px; font-size: 10px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--gl); text-decoration: none; border-bottom: 1px solid var(--bd); padding-bottom: 1px; transition: all 0.15s; }
+.td-link:hover { color: var(--bk); border-bottom-color: var(--bk); }
+.td-dias { font-size: 13px; color: var(--gl2); font-weight: 300; }
+.td-formato { font-size: 11px; font-weight: 300; color: var(--gl); margin-top: 3px; }
+
+/* CARRERAS SECTION */
+.races-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 0; }
+.race-card { background: var(--bk); padding: 28px 28px; }
+.race-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: rgba(237,232,225,0.35); margin-bottom: 8px; }
+.race-city { font-size: 20px; font-weight: 900; text-transform: uppercase; color: var(--bone); margin-bottom: 4px; }
+.race-date { font-size: 12px; font-weight: 300; color: rgba(237,232,225,0.45); }
+.race-note { font-size: 11px; color: rgba(237,232,225,0.35); margin-top: 8px; font-weight: 300; }
+
+/* CTA */
+.cta-section { padding: 80px 48px; text-align: center; }
+.cta-label { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 16px; }
+.cta-title { font-size: clamp(26px, 4vw, 48px); font-weight: 900; text-transform: uppercase; color: var(--bk); margin-bottom: 14px; line-height: 1; }
+.cta-sub { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 380px; margin: 0 auto 36px; line-height: 1.7; }
+.cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-p { display: inline-block; padding: 15px 36px; background: var(--bk); color: var(--bone); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+.btn-p:hover { opacity: 0.8; }
+.btn-s { display: inline-block; padding: 15px 36px; background: transparent; color: var(--gl2); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; border: 1px solid var(--bd); transition: all 0.2s; }
+.btn-s:hover { border-color: var(--bk); color: var(--bk); }
+
+footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: var(--bk); }
+.f-brand { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bone); }
+.f-brand span { font-weight: 300; font-size: 9px; letter-spacing: 4px; color: rgba(237,232,225,0.3); display: block; margin-top: 2px; }
+.f-links { display: flex; gap: 20px; list-style: none; }
+.f-links a { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.35); text-decoration: none; transition: color 0.2s; }
+.f-links a:hover { color: var(--bone); }
+
+@media(max-width:768px){
+  .nav { padding: 0 20px; } .nav-links { display: none; }
+  .hero, .section, .cta-section { padding-left: 24px; padding-right: 24px; }
+  .cal-table { display: block; overflow-x: auto; }
+  footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo">Gym Tour<span>México · T26/27</span></a>
+  <ul class="nav-links">
+    <li><a href="calendario.html" class="active">Calendario</a></li>
+    <li><a href="gym-owners.html">Soy Gym Owner</a></li>
+    <li><a href="atletas.html">Soy Atleta</a></li>
+    <li><a href="equipo.html">El Equipo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Temporada 26/27</div>
+    <div class="hero-wm">
+      Calendario
+      <em>Jul 2026 — May 2027</em>
+    </div>
+    <p class="hero-sub">11 paradas confirmadas en 12 ciudades. El Gym Tour arranca en julio y cierra en mayo — y seguimos sumando ciudades a la temporada.</p>
+    <div class="legend">
+      <div class="leg-item"><div class="leg-dot carrera"></div>GT · Ciudad Carrera</div>
+      <div class="leg-item"><div class="leg-dot libre"></div>GT · Ciudad Libre</div>
+      <div class="leg-item"><div class="leg-dot race"></div>Carrera Oficial HYROX MX</div>
+    </div>
+  </div>
+</div>
+
+<!-- GYM TOURS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Gym Tours · T26/27</div>
+    <table class="cal-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Ciudad</th>
+          <th>Fechas</th>
+          <th>Formato</th>
+          <th>Tipo</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <!-- JULIO -->
+        <tr class="month-row"><td colspan="6">Julio 2026</td></tr>
+        <tr>
+          <td><div class="td-n">GT 01</div></td>
+          <td>
+            <div class="td-city">Acapulco</div>
+            <div class="td-sub">Cuernavaca + Acapulco · Guerrero</div>
+          </td>
+          <td><div class="td-date">Mié 15 – Dom 19 Jul 2026</div></td>
+          <td><div class="td-dias">4 días operativos</div><div class="td-formato">2 ciudades</div></td>
+          <td><span class="td-tag c">Ciudad Carrera</span></td>
+          <td><a href="acapulco.html" class="td-link">Ver detalle →</a></td>
+        </tr>
+
+        <!-- AGOSTO -->
+        <tr class="month-row"><td colspan="6">Agosto 2026</td></tr>
+        <tr>
+          <td><div class="td-n">GT 02</div></td>
+          <td>
+            <div class="td-city">Querétaro</div>
+            <div class="td-sub">Querétaro, Querétaro</div>
+          </td>
+          <td><div class="td-date">Mié 26 – Dom 30 Ago 2026</div></td>
+          <td><div class="td-dias">5 días operativos</div></td>
+          <td><span class="td-tag">Ciudad Libre</span></td>
+          <td><a href="queretaro.html" class="td-link">Ver detalle →</a></td>
+        </tr>
+
+        <!-- SEPTIEMBRE -->
+        <tr class="month-row"><td colspan="6">Septiembre 2026</td></tr>
+        <tr>
+          <td><div class="td-n">GT 03</div></td>
+          <td>
+            <div class="td-city">León</div>
+            <div class="td-sub">León, Guanajuato</div>
+          </td>
+          <td><div class="td-date">Mié 16 – Sáb 19 Sep 2026</div></td>
+          <td><div class="td-dias">4 días operativos</div></td>
+          <td><span class="td-tag">Ciudad Libre</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+        <tr>
+          <td><div class="td-n">GT 04</div></td>
+          <td>
+            <div class="td-city">Ciudad de México</div>
+            <div class="td-sub">CDMX</div>
+          </td>
+          <td><div class="td-date">Mar 29 Sep – Dom 4 Oct 2026</div></td>
+          <td><div class="td-dias">6 días operativos</div><div class="td-formato">Formato extendido</div></td>
+          <td><span class="td-tag c">Ciudad Carrera</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+
+        <!-- NOVIEMBRE -->
+        <tr class="month-row"><td colspan="6">Noviembre 2026</td></tr>
+        <tr>
+          <td><div class="td-n">GT 05</div></td>
+          <td>
+            <div class="td-city">Tijuana</div>
+            <div class="td-sub">Tijuana, Baja California</div>
+          </td>
+          <td><div class="td-date">Mié 25 – Dom 29 Nov 2026</div></td>
+          <td><div class="td-dias">5 días operativos</div></td>
+          <td><span class="td-tag">Ciudad Libre</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+
+        <!-- DICIEMBRE -->
+        <tr class="month-row"><td colspan="6">Diciembre 2026</td></tr>
+        <tr>
+          <td><div class="td-n">GT 06</div></td>
+          <td>
+            <div class="td-city">Mérida</div>
+            <div class="td-sub">Mérida, Yucatán</div>
+          </td>
+          <td><div class="td-date">Mié 9 – Dom 13 Dic 2026</div></td>
+          <td><div class="td-dias">5 días operativos</div></td>
+          <td><span class="td-tag">Ciudad Libre</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+
+        <!-- ENERO 2027 -->
+        <tr class="month-row"><td colspan="6">Enero 2027</td></tr>
+        <tr>
+          <td><div class="td-n">GT 07</div></td>
+          <td>
+            <div class="td-city">Cancún</div>
+            <div class="td-sub">Cancún, Quintana Roo · Retiro XCaret</div>
+          </td>
+          <td><div class="td-date">Mié 14 – Dom 18 Ene 2027</div></td>
+          <td><div class="td-dias">5 días operativos</div></td>
+          <td><span class="td-tag c">Ciudad Carrera</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+
+        <!-- FEBRERO 2027 -->
+        <tr class="month-row"><td colspan="6">Febrero 2027</td></tr>
+        <tr>
+          <td><div class="td-n">GT 08</div></td>
+          <td>
+            <div class="td-city">Guadalajara</div>
+            <div class="td-sub">Guadalajara, Jalisco</div>
+          </td>
+          <td><div class="td-date">Mié 3 – Dom 7 Feb 2027</div></td>
+          <td><div class="td-dias">5 días operativos</div><div class="td-formato">Formato extendido</div></td>
+          <td><span class="td-tag c">Ciudad Carrera</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+
+        <!-- MARZO 2027 -->
+        <tr class="month-row"><td colspan="6">Marzo 2027</td></tr>
+        <tr>
+          <td><div class="td-n">GT 09</div></td>
+          <td>
+            <div class="td-city">Saltillo + Monterrey</div>
+            <div class="td-sub">Saltillo, Coah. + Monterrey, NL</div>
+          </td>
+          <td><div class="td-date">Mar 2 – Dom 7 Mar 2027</div></td>
+          <td><div class="td-dias">6 días operativos</div><div class="td-formato">2 ciudades · Semana completa</div></td>
+          <td><span class="td-tag c">Ciudad Carrera</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+
+        <!-- ABRIL 2027 -->
+        <tr class="month-row"><td colspan="6">Abril 2027</td></tr>
+        <tr>
+          <td><div class="td-n">GT 10</div></td>
+          <td>
+            <div class="td-city">Chihuahua</div>
+            <div class="td-sub">Chihuahua, Chihuahua</div>
+          </td>
+          <td><div class="td-date">Mié 31 Mar – Dom 4 Abr 2027</div></td>
+          <td><div class="td-dias">5 días operativos</div></td>
+          <td><span class="td-tag">Ciudad Libre</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+        <tr>
+          <td><div class="td-n">GT 11</div></td>
+          <td>
+            <div class="td-city">Puebla</div>
+            <div class="td-sub">Puebla, Puebla</div>
+          </td>
+          <td><div class="td-date">Mié 28 Abr – Dom 2 May 2027</div></td>
+          <td><div class="td-dias">5 días operativos</div></td>
+          <td><span class="td-tag c">Ciudad Carrera</span></td>
+          <td><a href="#" class="td-link">Próximamente</a></td>
+        </tr>
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CARRERAS OFICIALES -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Carreras Oficiales HYROX MX · T26/27</div>
+    <div class="races-grid">
+      <div class="race-card">
+        <div class="race-n">Carrera 01</div>
+        <div class="race-city">Acapulco</div>
+        <div class="race-date">Mié 2 – Lun 7 Sep 2026</div>
+        <div class="race-note">Jue 3 Sep · HYROX MX Affiliate Awards</div>
+      </div>
+      <div class="race-card">
+        <div class="race-n">Carrera 02</div>
+        <div class="race-city">Ciudad de México</div>
+        <div class="race-date">Mié 28 Oct – Lun 2 Nov 2026</div>
+      </div>
+      <div class="race-card">
+        <div class="race-n">Carrera 03</div>
+        <div class="race-city">Cancún</div>
+        <div class="race-date">Mié 18 – Lun 23 Feb 2027</div>
+      </div>
+      <div class="race-card">
+        <div class="race-n">Carrera 04</div>
+        <div class="race-city">Guadalajara</div>
+        <div class="race-date">Mié 18 – Lun 23 Mar 2027</div>
+      </div>
+      <div class="race-card">
+        <div class="race-n">Carrera 05</div>
+        <div class="race-city">Monterrey</div>
+        <div class="race-date">Mié 15 – Lun 20 Abr 2027</div>
+      </div>
+      <div class="race-card">
+        <div class="race-n">Carrera 06</div>
+        <div class="race-city">Puebla</div>
+        <div class="race-date">Mié 20 – Lun 25 May 2027</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-label">¿Tu ciudad no aparece todavía?</div>
+  <h2 class="cta-title">Seguimos<br>sumando paradas.</h2>
+  <p class="cta-sub">El calendario crece con la temporada. Si tu ciudad no está aún, puede que llegue pronto.</p>
+  <div class="cta-btns">
+    <a href="gym-owners.html" class="btn-p">Soy Gym Owner</a>
+    <a href="atletas.html" class="btn-s">Soy Atleta</a>
+  </div>
+</div>
+
+<footer>
+  <div class="f-brand">Gym Tour<span>México · Temporada 26/27</span></div>
+  <ul class="f-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="gym-owners.html">Gym Owners</a></li>
+    <li><a href="atletas.html">Atletas</a></li>
+    <li><a href="equipo.html">Equipo</a></li>
+  </ul>
+</footer>
+
+</body>
+</html>
