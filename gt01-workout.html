@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYROX Gym Tour — Workout · Acapulco GT01</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --y: #E8FF00; --bk: #0A0A0A; --g1: #111; --g2: #181818; --gl: #333; }
+html, body { width: 100%; height: 100%; background: var(--bk); overflow: hidden; font-family: 'Barlow Condensed', sans-serif; }
+
+.screen { width: 100vw; height: 100vh; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+
+.bg-lines {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(90deg, transparent, transparent 79px, rgba(255,255,255,0.018) 79px, rgba(255,255,255,0.018) 80px);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--y); padding: 1.4vh 4vw;
+  display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 2; flex-shrink: 0;
+}
+.hyrox-logo { font-size: 4.8vh; font-weight: 900; color: var(--bk); letter-spacing: -1px; line-height: 1; }
+.gt-badge { background: var(--bk); color: var(--y); font-size: 1.1vh; font-weight: 700; letter-spacing: 3px; padding: 0.5vh 1vw; text-transform: uppercase; }
+.header-right { font-size: 1.3vh; font-weight: 700; letter-spacing: 3px; color: var(--bk); text-transform: uppercase; }
+
+/* ── TIMING BAR ── */
+.timing-bar {
+  background: #161616; border-bottom: 2px solid var(--y);
+  padding: 1.2vh 4vw;
+  display: flex; align-items: center; gap: 2.5vw;
+  position: relative; z-index: 2; flex-shrink: 0;
+}
+.timing-label { font-size: 1.1vh; font-weight: 600; letter-spacing: 3px; color: #555; text-transform: uppercase; }
+
+/* BIG timing values */
+.timing-on {
+  background: var(--y); color: var(--bk);
+  font-size: 3.8vh; font-weight: 900;
+  padding: 0.2vh 1.2vw 0vh; letter-spacing: 1px; line-height: 1;
+}
+.timing-sep { color: #2a2a2a; font-size: 3vh; font-weight: 300; }
+.timing-off {
+  background: #2a2a2a; color: #777;
+  font-size: 3.8vh; font-weight: 900;
+  padding: 0.2vh 1.2vw 0vh; letter-spacing: 1px; line-height: 1;
+}
+.timing-right { margin-left: auto; font-size: 1.1vh; font-weight: 600; letter-spacing: 2px; color: #444; text-transform: uppercase; }
+.timing-right span { color: var(--y); }
+
+/* ── GRID ── */
+.main { flex: 1; padding: 1.8vh 2.5vw; position: relative; z-index: 2; min-height: 0; }
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  grid-template-rows: repeat(2,1fr);
+  gap: 1vh;
+  height: 100%;
+}
+
+/* ── CARD ── */
+.card {
+  background: var(--g1);
+  border: 1px solid #1C1C1C;
+  position: relative; overflow: hidden;
+  display: flex; flex-direction: column;
+  padding: 1.6vh 1.4vw 1.2vh;
+}
+.card::before {
+  content: ''; position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: #1E1E1E;
+}
+.card.has-penalty::before { background: var(--y); }
+
+.card-num {
+  position: absolute; top: 0.8vh; right: 0.8vw;
+  font-size: 3vh; font-weight: 900; color: rgba(255,255,255,0.15);
+  line-height: 1; letter-spacing: -1px; pointer-events: none;
+  font-family: 'Barlow Condensed', sans-serif;
+}
+.card-station {
+  font-size: 0.85vh; font-weight: 700; letter-spacing: 3px;
+  color: #444; text-transform: uppercase; margin-bottom: 0.5vh;
+  padding-right: 3vw;
+}
+.card.has-penalty .card-station { color: #ff4444; }
+.card-name {
+  font-size: 3.8vh; font-weight: 900; color: #fff;
+  text-transform: uppercase; line-height: 0.92; flex-shrink: 0;
+}
+.card-name.md { font-size: 2.8vh; }
+.card-name.sm { font-size: 2.2vh; }
+
+/* Clean card — no rules, just movement cue */
+.card-cue {
+  font-family: 'Barlow', sans-serif;
+  font-size: 1vh; font-weight: 400; color: #2E2E2E;
+  letter-spacing: 1px; text-transform: uppercase;
+  margin-top: auto; padding-top: 0.8vh;
+}
+
+/* Penalty card */
+.penalties {
+  margin-top: auto;
+  border-top: 1px solid #1E1E1E;
+  padding-top: 0.8vh;
+  display: flex; flex-direction: column; gap: 0.4vh;
+}
+.pen {
+  display: flex; align-items: flex-start; gap: 0.6vw;
+  font-family: 'Barlow', sans-serif;
+  font-size: 1.05vh; font-weight: 400; color: rgba(255,255,255,0.38);
+  line-height: 1.3;
+}
+.pen-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--y); margin-top: 0.45vh; flex-shrink: 0; opacity: 0.7; }
+
+/* New rule tag */
+.new-rule {
+  display: inline-block; font-size: 0.75vh; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  background: rgba(232,255,0,0.07); color: rgba(232,255,0,0.5);
+  border: 1px solid rgba(232,255,0,0.12);
+  padding: 0.15vh 0.5vw; margin-bottom: 0.6vh; align-self: flex-start;
+}
+
+/* No-rep tag */
+.norep-tag {
+  display: inline-block; font-size: 0.75vh; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  background: rgba(255,80,80,0.06); color: rgba(255,100,100,0.5);
+  border: 1px solid rgba(255,80,80,0.12);
+  padding: 0.15vh 0.5vw; margin-bottom: 0.6vh; align-self: flex-start;
+}
+
+/* ── FOOTER ── */
+.footer {
+  background: #0D0D0D; border-top: 1px solid #181818;
+  padding: 0.7vh 4vw; display: flex; align-items: center; justify-content: space-between;
+  position: relative; z-index: 2; flex-shrink: 0;
+}
+.footer-text { font-size: 0.9vh; font-weight: 600; letter-spacing: 3px; color: #242424; text-transform: uppercase; }
+.footer-y { color: var(--y); }
+.dot { width: 4px; height: 4px; background: var(--y); border-radius: 50%; display: inline-block; margin: 0 0.8vw; vertical-align: middle; }
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="bg-lines"></div>
+
+  <!-- HEADER -->
+  <div class="header">
+    <div style="display:flex;align-items:center;gap:1.2vw;">
+      <div class="hyrox-logo">HYROX</div>
+      <div class="gt-badge">GYM TOUR MX · GT01 ACAPULCO</div>
+    </div>
+    <div class="header-right">Workout of the Day</div>
+  </div>
+
+  <!-- TIMING BAR -->
+  <div class="timing-bar">
+    <span class="timing-label">Formato</span>
+    <span class="timing-on">2:00 ON</span>
+    <span class="timing-sep">/</span>
+    <span class="timing-off">0:30 OFF</span>
+    <span class="timing-right">8 Estaciones <span>·</span> Trabajo total: 16:00 min</span>
+  </div>
+
+  <!-- GRID -->
+  <div class="main">
+    <div class="grid">
+
+      <!-- 01 SKI ERG -->
+      <div class="card">
+        <div class="card-station">Estación 01</div>
+        <div class="card-name">SKI<br>ERG</div>
+        <div class="card-num">01</div>
+      </div>
+
+      <!-- 02 SLED PULL -->
+      <div class="card has-penalty">
+        <div class="card-station">Estación 02 · ● PENALIZACIÓN</div>
+        <div class="card-name">SLED<br>PULL</div>
+        <div class="penalties">
+          <div class="pen"><div class="pen-dot"></div>Pisar la línea delantera o trasera</div>
+          <div class="pen"><div class="pen-dot"></div>Cuerda invade carril del compañero</div>
+        </div>
+        <div class="card-num">02</div>
+      </div>
+
+      <!-- 03 RUN -->
+      <div class="card">
+        <div class="card-station">Estación 03</div>
+        <div class="card-name">RUN</div>
+        <div class="card-num">03</div>
+      </div>
+
+      <!-- 04 BURPEE BROAD JUMP -->
+      <div class="card has-penalty">
+        <div class="card-station">Estación 04 · ● PENALIZACIÓN</div>
+        <div class="card-name sm">BURPEE<br>BROAD JUMP</div>
+        <div class="penalties">
+          <div class="new-rule">⚡ Nueva regla T26/27</div>
+          <div class="pen"><div class="pen-dot"></div>Pies desfasados +5cm</div>
+          <div class="pen"><div class="pen-dot"></div>Pecho no toca el suelo</div>
+          <div class="pen"><div class="pen-dot"></div>Overstepping</div>
+          <div class="pen"><div class="pen-dot"></div>Pasitos o shuffles</div>
+          <div class="pen"><div class="pen-dot"></div>Manos / pies fuera de línea</div>
+        </div>
+        <div class="card-num">04</div>
+      </div>
+
+      <!-- 05 ROW ERG -->
+      <div class="card">
+        <div class="card-station">Estación 05</div>
+        <div class="card-name">ROW<br>ERG</div>
+        <div class="card-num">05</div>
+      </div>
+
+      <!-- 06 LUNGES -->
+      <div class="card has-penalty">
+        <div class="card-station">Estación 06 · ● PENALIZACIÓN</div>
+        <div class="card-name">LUNGES</div>
+        <div class="penalties">
+          <div class="new-rule">⚡ Nueva regla T26/27</div>
+          <div class="pen"><div class="pen-dot"></div>Bajar la sandbag · 15s (no DQ)</div>
+          <div class="pen"><div class="pen-dot"></div>Sin extensión de cadera al pararse</div>
+          <div class="pen"><div class="pen-dot"></div>Rodilla trasera no toca el suelo</div>
+        </div>
+        <div class="card-num">06</div>
+      </div>
+
+      <!-- 07 RUN -->
+      <div class="card">
+        <div class="card-station">Estación 07</div>
+        <div class="card-name">RUN</div>
+        <div class="card-num">07</div>
+      </div>
+
+      <!-- 08 WALL BALLS -->
+      <div class="card has-penalty">
+        <div class="card-station">Estación 08 · ● PENALIZACIÓN</div>
+        <div class="card-name md">WALL<br>BALLS</div>
+        <div class="penalties">
+          <div class="norep-tag">Sin advertencia · No-Rep directo</div>
+          <div class="pen"><div class="pen-dot"></div>Sin paralelo</div>
+          <div class="pen"><div class="pen-dot"></div>Target incorrecto</div>
+        </div>
+        <div class="card-num">08</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <span class="footer-text"><span class="footer-y">HYROX</span><span class="dot"></span>GYM TOUR<span class="dot"></span>ACAPULCO<span class="dot"></span>GT01</span>
+    <span class="footer-text">WOLFPACK ECOSYSTEM</span>
+  </div>
+</div>
+</body>
+</html>

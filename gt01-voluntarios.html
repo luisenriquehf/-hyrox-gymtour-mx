@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYROX MX Crew — Sé parte del equipo</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root { --y: #E8FF00; --bk: #0A0A0A; --wh: #FFFFFF; --g1: #141414; --g2: #1C1C1C; --gl: #555; }
+
+html, body {
+  width: 100%; height: 100%;
+  background: var(--bk);
+  color: var(--wh);
+  font-family: 'Barlow', sans-serif;
+  overflow: hidden;
+}
+
+/* 16:9 full screen */
+.screen {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── LEFT PANEL — Por qué ── */
+.left {
+  background: var(--bk);
+  padding: 6vh 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+  overflow: hidden;
+}
+
+.left::before {
+  content: 'CREW';
+  position: absolute;
+  bottom: -2vh;
+  left: -1vw;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 28vh;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.03);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.left-top {}
+
+.eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.1vh;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--y);
+  margin-bottom: 1.5vh;
+}
+
+.main-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 9vh;
+  font-weight: 900;
+  text-transform: uppercase;
+  line-height: 0.88;
+  color: var(--wh);
+  margin-bottom: 1vh;
+}
+
+.main-title em {
+  display: block;
+  font-style: normal;
+  color: var(--y);
+}
+
+.tagline {
+  font-size: 1.6vh;
+  font-weight: 300;
+  color: rgba(255,255,255,0.5);
+  max-width: 34vw;
+  line-height: 1.7;
+  margin-top: 1.5vh;
+}
+
+/* Benefits */
+.benefits { display: flex; flex-direction: column; gap: 0; margin-top: 3vh; }
+
+.benefit {
+  display: flex;
+  align-items: center;
+  gap: 1.8vw;
+  padding: 1.6vh 0;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+
+.benefit:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+.benefit-icon {
+  width: 4vh;
+  height: 4vh;
+  border-radius: 50%;
+  background: rgba(232,255,0,0.08);
+  border: 1px solid rgba(232,255,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.8vh;
+}
+
+.benefit-text {}
+.benefit-t {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.2vh;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--wh);
+  line-height: 1;
+}
+.benefit-b {
+  font-size: 1.3vh;
+  font-weight: 300;
+  color: rgba(255,255,255,0.4);
+  margin-top: 0.2vh;
+  line-height: 1.4;
+}
+
+/* Ticket highlight */
+.ticket-highlight {
+  background: rgba(232,255,0,0.05);
+  border: 1px solid rgba(232,255,0,0.15);
+  padding: 1.8vh 1.5vw;
+  margin-top: 2vh;
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+}
+
+.ticket-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1vh;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: var(--y);
+  color: var(--bk);
+  padding: 0.4vh 0.8vw;
+  flex-shrink: 0;
+}
+
+.ticket-text {}
+.ticket-t {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.4vh;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--y);
+  line-height: 1;
+}
+.ticket-b {
+  font-size: 1.2vh;
+  font-weight: 300;
+  color: rgba(232,255,0,0.55);
+  margin-top: 0.3vh;
+}
+
+/* ── RIGHT PANEL — Cómo ── */
+.right {
+  background: var(--g1);
+  padding: 6vh 5vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.right-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 5vh;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--wh);
+  line-height: 1;
+  margin-bottom: 3vh;
+}
+
+.steps { display: flex; flex-direction: column; gap: 0; flex: 1; }
+
+.step {
+  display: grid;
+  grid-template-columns: 5vh 1fr;
+  gap: 1.5vw;
+  padding: 2vh 0;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
+  align-items: start;
+}
+
+.step-num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 5vh;
+  font-weight: 900;
+  color: rgba(255,255,255,0.08);
+  line-height: 1;
+}
+
+.step-body {}
+.step-t {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.6vh;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--wh);
+  letter-spacing: 0.5px;
+  line-height: 1;
+  margin-bottom: 0.5vh;
+}
+.step-b {
+  font-size: 1.4vh;
+  font-weight: 300;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.6;
+}
+.step-b strong { color: rgba(255,255,255,0.7); font-weight: 500; }
+
+/* QR Section */
+.qr-block {
+  background: var(--g2);
+  padding: 2vh 2vw;
+  display: flex;
+  align-items: center;
+  gap: 2vw;
+  margin-top: 2vh;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.qr-img {
+  width: 12vh;
+  height: 12vh;
+  flex-shrink: 0;
+  background: white;
+  padding: 0.6vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.qr-img img { width: 100%; height: 100%; display: block; }
+
+.qr-text {}
+.qr-cta {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 2.8vh;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: var(--wh);
+  line-height: 1;
+  margin-bottom: 0.5vh;
+}
+.qr-sub {
+  font-size: 1.3vh;
+  font-weight: 300;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
+  margin-bottom: 0.8vh;
+}
+.qr-link {
+  font-size: 1.2vh;
+  font-weight: 600;
+  color: var(--y);
+  letter-spacing: 0.5px;
+  word-break: break-all;
+}
+
+/* Bottom bar */
+.bottom-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0.8vh;
+  background: linear-gradient(to right, var(--y) 0%, rgba(232,255,0,0.3) 100%);
+}
+</style>
+</head>
+<body>
+<div class="screen">
+
+  <!-- LEFT: POR QUÉ -->
+  <div class="left">
+    <div class="left-top">
+      <div class="eyebrow">HYROX México · Gym Tour T26/27</div>
+      <div class="main-title">
+        Sé parte<br>del
+        <em>HYROX Crew</em>
+      </div>
+      <p class="tagline">Vive HYROX desde adentro. Conoce cómo se opera una carrera internacional y sé de los primeros en crecer dentro del equipo.</p>
+    </div>
+
+    <div class="benefits">
+      <div class="benefit">
+        <div class="benefit-icon">🎽</div>
+        <div class="benefit-text">
+          <div class="benefit-t">Playera oficial del evento</div>
+          <div class="benefit-b">Una por día de participación · Kit de bienvenida</div>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">🍕</div>
+        <div class="benefit-text">
+          <div class="benefit-t">Comida + hidratación</div>
+          <div class="benefit-b">Durante todo tu turno · Cerveza y pizza al cierre del evento</div>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">🎁</div>
+        <div class="benefit-text">
+          <div class="benefit-t">Regalos de sponsors</div>
+          <div class="benefit-b">Sorpresas especiales de parte de nuestras marcas aliadas</div>
+        </div>
+      </div>
+      <div class="benefit">
+        <div class="benefit-icon">⭐</div>
+        <div class="benefit-text">
+          <div class="benefit-t">Crece dentro de HYROX</div>
+          <div class="benefit-b">El Crew es la puerta de entrada al equipo de Staff y Race Direction</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ticket-highlight">
+      <div class="ticket-badge">El beneficio más importante</div>
+      <div class="ticket-text">
+        <div class="ticket-t">Ticket HYROX gratis para correr</div>
+        <div class="ticket-b">2 turnos completados = inscripción 100% gratis · Vigencia de 1 año · Cualquier carrera HYROX México&nbsp;&nbsp;|&nbsp;&nbsp;1 turno = 50% de descuento</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: CÓMO -->
+  <div class="right">
+    <div>
+      <div class="eyebrow">¿Cómo me uno?</div>
+      <div class="right-title">Así de fácil.</div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <div class="step-t">Escanea el QR con tu celular</div>
+          <div class="step-b">Úneteal canal oficial de WhatsApp de <strong>HYROX Sports MX</strong>. Ahí recibirás toda la información sobre las próximas carreras.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <div class="step-t">Espera el aviso en el grupo</div>
+          <div class="step-b">Un mes antes de cada carrera publicamos el link de registro oficial. Solo tienes que dar clic, elegir tus turnos disponibles y registrar tu gym afiliado.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <div class="step-t">¡Listo! Ya eres Crew</div>
+          <div class="step-b">Recibirás confirmación y acceso al grupo específico de tu carrera y estación. El resto lo hacemos juntos.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="qr-block">
+      <div class="qr-img">
+        <!-- QR generado para https://whatsapp.com/channel/0029Vb6upPvFi8xlF3D9tz0E -->
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://whatsapp.com/channel/0029Vb6upPvFi8xlF3D9tz0E&bgcolor=ffffff&color=000000&margin=2" alt="QR WhatsApp HYROX MX Crew">
+      </div>
+      <div class="qr-text">
+        <div class="qr-cta">Escanea y únete ahora</div>
+        <div class="qr-sub">Canal oficial de WhatsApp · HYROX Sports México<br>Toda la información de voluntariado directo en tu celular</div>
+        <div class="qr-link">whatsapp.com/channel/0029Vb6upPvFi8xlF3D9tz0E</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar"></div>
+</div>
+</body>
+</html>

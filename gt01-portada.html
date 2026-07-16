@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HYROX Gym Tour — Acapulco · GT01</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;700;800;900&family=Barlow:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; background: #0A0A0A; overflow: hidden; }
+
+.screen {
+  width: 100vw; height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  padding: 6vh 7vw;
+  position: relative;
+  overflow: hidden;
+  background: #0A0A0A;
+}
+
+/* Grid lines background */
+.screen::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    repeating-linear-gradient(0deg, transparent, transparent 8vh, rgba(255,255,255,0.015) 8vh, rgba(255,255,255,0.015) calc(8vh + 1px)),
+    repeating-linear-gradient(90deg, transparent, transparent 8vw, rgba(255,255,255,0.015) 8vw, rgba(255,255,255,0.015) calc(8vw + 1px));
+  pointer-events: none;
+}
+
+.watermark {
+  position: absolute;
+  bottom: -4vh;
+  right: -2vw;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 40vh;
+  font-weight: 900;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255,255,255,0.025);
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.brand {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.6vh;
+  font-weight: 700;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+}
+
+.gt-badge {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.2vh;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  background: #E8FF00;
+  color: #0A0A0A;
+  padding: 0.6vh 1.2vw;
+}
+
+.center { flex: 1; display: flex; flex-direction: column; justify-content: center; position: relative; }
+
+.eyebrow {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 1.8vh;
+  font-weight: 600;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: #E8FF00;
+  margin-bottom: 2vh;
+  display: flex;
+  align-items: center;
+  gap: 1.5vw;
+}
+.eyebrow::before { content: ''; width: 4vw; height: 1px; background: #E8FF00; }
+
+.city-title {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 22vh;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  line-height: 0.82;
+  letter-spacing: -2px;
+}
+
+.gym-tour-line {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 8vh;
+  font-weight: 300;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  letter-spacing: 8px;
+  margin-top: 1vh;
+}
+
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding-top: 3vh;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  position: relative;
+}
+
+.date-block {}
+.date-label {
+  font-family: 'Barlow', sans-serif;
+  font-size: 1vh;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 0.6vh;
+}
+.date-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 3.5vh;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  letter-spacing: 1px;
+}
+
+.season-block { text-align: right; }
+.season-label {
+  font-family: 'Barlow', sans-serif;
+  font-size: 1vh;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.25);
+  margin-bottom: 0.6vh;
+}
+.season-val {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 3.5vh;
+  font-weight: 700;
+  color: rgba(255,255,255,0.4);
+  letter-spacing: 2px;
+}
+
+/* Yellow bottom bar */
+.bottom-bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 0.8vh;
+  background: #E8FF00;
+}
+</style>
+</head>
+<body>
+<div class="screen">
+  <div class="watermark">GT</div>
+
+  <div class="top">
+    <div class="brand">HYROX Gym Tour México</div>
+    <div class="gt-badge">GT 01 · Ciudad Carrera</div>
+  </div>
+
+  <div class="center">
+    <div class="eyebrow">Temporada 26/27</div>
+    <div class="city-title">Acapulco</div>
+    <div class="gym-tour-line">Gym Tour</div>
+  </div>
+
+  <div class="bottom">
+    <div class="date-block">
+      <div class="date-label">Fechas del Tour</div>
+      <div class="date-val">15 – 18 Julio 2026</div>
+    </div>
+    <div class="season-block">
+      <div class="season-label">Temporada</div>
+      <div class="season-val">26 / 27</div>
+    </div>
+  </div>
+
+  <div class="bottom-bar"></div>
+</div>
+</body>
+</html>
