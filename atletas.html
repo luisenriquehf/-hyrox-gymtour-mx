@@ -27,7 +27,9 @@ body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-ser
 .hero-wm em { display: block; font-style: normal; font-weight: 300; font-size: clamp(22px, 4vw, 44px); letter-spacing: 8px; color: var(--gl); margin-top: 8px; }
 .hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding: 28px 0; border-top: 1px solid var(--bd); flex-wrap: wrap; }
 .hero-desc { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 440px; line-height: 1.85; }
-.hero-pain { font-size: 14px; font-style: italic; color: var(--gl); max-width: 300px; line-height: 1.7; border-left: 2px solid var(--bd); padding-left: 16px; }
+.hero-pain { max-width: 380px; }
+.hero-pain-q { font-size: 16px; font-weight: 700; color: var(--bk); line-height: 1.4; margin-bottom: 8px; }
+.hero-pain-sub { font-size: 13px; font-weight: 300; color: var(--gl2); font-style: italic; line-height: 1.6; }
 
 /* SECTIONS */
 .section { padding: 80px 48px; border-bottom: 1px solid var(--bd); }
@@ -37,13 +39,13 @@ body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-ser
 .sh { font-size: clamp(28px, 4vw, 48px); font-weight: 900; line-height: 1.0; text-transform: uppercase; color: var(--bk); margin-bottom: 16px; }
 .sb { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 560px; line-height: 1.85; }
 
-/* EXPERIENCE STEPS */
-.steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px,1fr)); gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
-.step { background: var(--bone); padding: 32px 28px; transition: background 0.15s; }
-.step:hover { background: var(--wh); }
-.step-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 14px; }
-.step-t { font-size: 16px; font-weight: 700; text-transform: uppercase; color: var(--bk); margin-bottom: 8px; letter-spacing: 0.3px; }
-.step-b { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.65; }
+/* EXPERIENCE GRID */
+.exp-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.exp-cell { background: var(--bone); padding: 32px 28px; transition: background 0.15s; }
+.exp-cell:hover { background: var(--wh); }
+.exp-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 12px; }
+.exp-t { font-size: 15px; font-weight: 700; text-transform: uppercase; color: var(--bk); margin-bottom: 8px; }
+.exp-b { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.65; }
 
 /* STATEMENT */
 .statement { padding: 72px 48px; border-bottom: 1px solid var(--bd); background: var(--bk); }
@@ -51,22 +53,23 @@ body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-ser
 .statement-q { font-size: clamp(20px, 3vw, 34px); font-weight: 900; line-height: 1.15; text-transform: uppercase; color: var(--bone); max-width: 700px; border-left: 2px solid var(--bone); padding-left: 28px; }
 .statement-sub { font-size: 11px; font-weight: 300; letter-spacing: 3px; text-transform: uppercase; color: rgba(237,232,225,0.3); margin-top: 18px; padding-left: 30px; }
 
-/* CREW */
-.crew-block { background: var(--bk); padding: 56px 48px; border-bottom: 1px solid rgba(255,255,255,0.06); }
-.crew-inner { max-width: 1100px; margin: 0 auto; }
-.crew-label { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: rgba(237,232,225,0.35); margin-bottom: 32px; display: flex; align-items: center; gap: 14px; }
-.crew-label::after { content: ''; flex: 1; height: 1px; background: rgba(237,232,225,0.06); }
-.crew-title { font-size: clamp(28px, 4vw, 48px); font-weight: 900; text-transform: uppercase; color: var(--bone); margin-bottom: 16px; line-height: 1; }
-.crew-sub { font-size: 14px; font-weight: 300; color: rgba(237,232,225,0.55); max-width: 500px; line-height: 1.85; margin-bottom: 48px; }
-.crew-benefits { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 1px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); }
-.crew-benefit { background: rgba(255,255,255,0.02); padding: 28px 24px; }
-.crew-benefit-n { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.3); margin-bottom: 10px; }
-.crew-benefit-t { font-size: 14px; font-weight: 700; text-transform: uppercase; color: var(--bone); margin-bottom: 6px; }
-.crew-benefit-b { font-size: 12px; font-weight: 300; color: rgba(237,232,225,0.45); line-height: 1.6; }
+/* CREW SECTION */
+.crew-split { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.crew-cell { background: var(--bone); padding: 36px 32px; }
+.crew-label { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 12px; }
+.crew-title { font-size: 20px; font-weight: 900; text-transform: uppercase; color: var(--bk); margin-bottom: 12px; }
+.crew-body { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.7; }
+.crew-benefits { display: flex; flex-direction: column; gap: 0; margin-top: 48px; border: 1px solid var(--bd); }
+.crew-benefit { display: grid; grid-template-columns: 28px 1fr; gap: 16px; padding: 18px 24px; border-bottom: 1px solid var(--bd); align-items: center; background: var(--bone); transition: background 0.15s; }
+.crew-benefit:last-child { border-bottom: none; }
+.crew-benefit:hover { background: var(--wh); }
+.crew-benefit-n { font-size: 10px; font-weight: 700; letter-spacing: 1px; color: var(--gl); }
+.crew-benefit-t { font-size: 13px; font-weight: 500; color: var(--bk); }
+.crew-benefit-sub { font-size: 12px; font-weight: 300; color: var(--gl2); margin-top: 2px; }
 
 /* RULEBOOK */
 .rulebook-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
-.rb-cell { background: var(--bone); padding: 32px 28px; transition: background 0.15s; }
+.rb-cell { background: var(--bone); padding: 28px; transition: background 0.15s; }
 .rb-cell:hover { background: var(--wh); }
 .rb-q { font-size: 13px; font-weight: 600; color: var(--bk); margin-bottom: 8px; }
 .rb-a { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.65; }
@@ -91,9 +94,9 @@ footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; jus
 
 @media(max-width:768px){
   .nav { padding: 0 20px; } .nav-links { display: none; }
-  .hero, .section, .statement, .crew-block, .cta-section { padding-left: 24px; padding-right: 24px; }
+  .hero, .section, .statement, .cta-section { padding-left: 24px; padding-right: 24px; }
   .hero-bottom { flex-direction: column; align-items: flex-start; }
-  .rulebook-grid { grid-template-columns: 1fr; }
+  .exp-grid, .crew-split, .rulebook-grid { grid-template-columns: 1fr; }
   footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
 }
 </style>
@@ -106,7 +109,8 @@ footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; jus
     <li><a href="calendario.html">Calendario</a></li>
     <li><a href="gym-owners.html">Soy Gym Owner</a></li>
     <li><a href="atletas.html" class="active">Soy Atleta</a></li>
-    <li><a href="equipo.html">El Equipo</a></li>
+    <li><a href="index.html#equipo">El Equipo</a></li>
+    <li><a href="staff.html" style="border:1px solid rgba(0,0,0,0.10);padding:5px 12px;">Staff ↗</a></li>
   </ul>
 </nav>
 
@@ -119,39 +123,37 @@ footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; jus
       <em>Gym Tour México · T26/27</em>
     </div>
     <div class="hero-bottom">
-      <p class="hero-desc">No tienes que esperar al día de la carrera para vivir HYROX. El Gym Tour llega a los gimnasios afiliados de tu ciudad con clases abiertas — donde conoces a los coaches, aprendes el Rulebook desde adentro y te conectas con la comunidad HYROX de tu región.</p>
-      <p class="hero-pain">"Quiero conocer cómo funciona la carrera, entrenar con quienes la operan y ser parte de algo más grande."</p>
+      <p class="hero-desc">No tienes que esperar al día de la carrera para vivir HYROX. El Gym Tour llega a los gyms afiliados de tu ciudad con clases, coaches certificados y todo lo que necesitas saber para cruzar la meta.</p>
+      <div class="hero-pain">
+        <div class="hero-pain-q">Quiero conocer HYROX desde adentro — no solo correrlo.</div>
+        <div class="hero-pain-sub">"¿Cómo es la carrera en realidad? ¿Estoy listo? ¿Dónde entreno? ¿Cómo me uno al equipo?"</div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- QUÉ PUEDES VIVIR -->
+<!-- QUÉ VIVES EN EL GYM TOUR -->
 <section class="section">
   <div class="section-inner">
-    <div class="slabel">Tu experiencia en el Gym Tour</div>
-    <h2 class="sh">Lo que pasa<br>cuando el Tour llega.</h2>
-    <p class="sb">Cada parada del Gym Tour es una oportunidad real de conectarte con HYROX — antes de que llegue el día de la carrera.</p>
+    <div class="slabel">La experiencia</div>
+    <h2 class="sh">Lo que vives<br>en el Gym Tour.</h2>
+    <p class="sb">Cada visita a un gym afiliado es una experiencia completa — no una clase cualquiera. Esto es lo que te lleva a casa.</p>
 
-    <div class="steps">
-      <div class="step">
-        <div class="step-n">01</div>
-        <div class="step-t">Clases en formato HYROX</div>
-        <div class="step-b">Los Lead Coaches de HYROX llegan al gym afiliado de tu ciudad y dan clase en formato de carrera. Workout completo, estaciones reales, el mismo estándar que una carrera oficial.</div>
+    <div class="exp-grid">
+      <div class="exp-cell">
+        <div class="exp-n">01 · La clase</div>
+        <div class="exp-t">Entrenas como en carrera</div>
+        <div class="exp-b">Clase completa en formato HYROX — warm up, estaciones y workout adaptado al gym. El mismo estándar que en una carrera oficial, en el espacio de tu gym afiliado.</div>
       </div>
-      <div class="step">
-        <div class="step-n">02</div>
-        <div class="step-t">Entiende el Rulebook</div>
-        <div class="step-b">El Q&A después de la clase es para ti. Pregunta todo lo que quieres saber sobre la carrera: estaciones, penalizaciones, divisiones, tiempos, check-in. Los coaches resuelven cada duda con precisión.</div>
+      <div class="exp-cell">
+        <div class="exp-n">02 · El conocimiento</div>
+        <div class="exp-t">Preguntas reales, respuestas reales</div>
+        <div class="exp-b">Q&A abierto con Lead Coaches certificados y Head Judges de HYROX. Rulebook, penalizaciones, divisiones, check-in, horarios, bag drop — todo lo que no encuentras en ningún otro lado.</div>
       </div>
-      <div class="step">
-        <div class="step-n">03</div>
-        <div class="step-t">Conoce a la comunidad</div>
-        <div class="step-b">El Tour reúne a los atletas más comprometidos de cada ciudad. Conectas con personas que entrenan con el mismo objetivo que tú — cruzar una línea de llegada HYROX.</div>
-      </div>
-      <div class="step">
-        <div class="step-n">04</div>
-        <div class="step-t">Da el siguiente paso</div>
-        <div class="step-b">El Gym Tour es la puerta de entrada al Crew de HYROX. Ser voluntario en una carrera oficial empieza aquí — con todos los beneficios que eso significa.</div>
+      <div class="exp-cell">
+        <div class="exp-n">03 · La comunidad</div>
+        <div class="exp-t">Conoces a quien está detrás</div>
+        <div class="exp-b">El Tour te conecta con el equipo de HYROX México, con los coaches, con otros atletas de tu ciudad y con todo lo que significa ser parte de este deporte más allá de la carrera.</div>
       </div>
     </div>
   </div>
@@ -160,74 +162,102 @@ footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; jus
 <!-- STATEMENT -->
 <div class="statement">
   <div class="statement-inner">
-    <blockquote class="statement-q">La línea de llegada empieza mucho antes del día de la carrera.</blockquote>
+    <blockquote class="statement-q">La meta se cruza el día de la carrera. La preparación empieza aquí.</blockquote>
     <p class="statement-sub">HYROX Gym Tour México · T26/27</p>
   </div>
 </div>
 
 <!-- CREW -->
-<div class="crew-block">
-  <div class="crew-inner">
-    <div class="crew-label">HYROX MX Crew · Voluntarios</div>
-    <h2 class="crew-title">Vive HYROX<br>desde adentro.</h2>
-    <p class="crew-sub">Ser parte del Crew de HYROX no es solo ser voluntario. Es vivir una carrera desde el lado que pocos conocen — y llevarte beneficios reales por ello.</p>
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Sé parte del equipo</div>
+    <h2 class="sh">¿Quieres vivir<br>HYROX desde adentro?</h2>
+    <p class="sb">El Crew de HYROX es el equipo de voluntarios que hace posible cada carrera. El Gym Tour es el mejor momento para sumarte — y tiene beneficios reales.</p>
+
+    <div class="crew-split">
+      <div class="crew-cell">
+        <div class="crew-label">¿Qué es el Crew?</div>
+        <div class="crew-title">Los que hacen que la carrera exista.</div>
+        <div class="crew-body">El Crew de HYROX México son los voluntarios que operan las estaciones, guían a los atletas y hacen que cada carrera funcione. No es trabajo — es vivir el evento desde el mejor lugar posible. Cada carrera necesita más de 200 personas por día, y el Gym Tour es donde empieza ese reclutamiento.</div>
+      </div>
+      <div class="crew-cell">
+        <div class="crew-label">¿Qué ganas?</div>
+        <div class="crew-title">Un turno que vale una carrera.</div>
+        <div class="crew-body">Ser parte del Crew tiene beneficios concretos — no solo la experiencia. Con dos turnos completados, corres HYROX gratis. Con uno, tienes el 50% de descuento en tu inscripción.</div>
+      </div>
+    </div>
 
     <div class="crew-benefits">
       <div class="crew-benefit">
-        <div class="crew-benefit-n">1 turno completado</div>
-        <div class="crew-benefit-t">50% de descuento</div>
-        <div class="crew-benefit-b">Completa un turno como Crew y corre HYROX con el 50% de descuento en tu inscripción. Vigencia de un año, intransferible.</div>
+        <div class="crew-benefit-n">01</div>
+        <div>
+          <div class="crew-benefit-t">Inscripción gratis · 2 o más turnos</div>
+          <div class="crew-benefit-sub">Ticket intransferible · vigencia de 1 año · para cualquier carrera HYROX México</div>
+        </div>
       </div>
       <div class="crew-benefit">
-        <div class="crew-benefit-n">2 o más turnos</div>
-        <div class="crew-benefit-t">Inscripción gratuita</div>
-        <div class="crew-benefit-b">Con dos turnos completados, tu lugar en la carrera es gratis. Eso es HYROX sin costo — a cambio de ser parte del equipo que hace posible el evento.</div>
+        <div class="crew-benefit-n">02</div>
+        <div>
+          <div class="crew-benefit-t">50% de descuento · 1 turno</div>
+          <div class="crew-benefit-sub">En tu inscripción a cualquier carrera HYROX México · vigencia 1 año</div>
+        </div>
       </div>
       <div class="crew-benefit">
-        <div class="crew-benefit-n">Siempre incluido</div>
-        <div class="crew-benefit-t">Kit de Crew</div>
-        <div class="crew-benefit-b">Playera oficial del evento, snacks e hidratación durante tu turno, $300 MXN en tienda Puma y el cierre de evento con todo el equipo.</div>
+        <div class="crew-benefit-n">03</div>
+        <div>
+          <div class="crew-benefit-t">Playera oficial del evento</div>
+          <div class="crew-benefit-sub">Una por día de participación</div>
+        </div>
       </div>
       <div class="crew-benefit">
-        <div class="crew-benefit-n">El cierre</div>
-        <div class="crew-benefit-t">Cerveza + Pizza</div>
-        <div class="crew-benefit-b">Cada carrera HYROX termina con el cierre oficial del Crew — para celebrar como se debe con las personas que hicieron posible el evento.</div>
+        <div class="crew-benefit-n">04</div>
+        <div>
+          <div class="crew-benefit-t">$300 MXN en tienda Puma</div>
+          <div class="crew-benefit-sub">Válido dentro del evento</div>
+        </div>
+      </div>
+      <div class="crew-benefit">
+        <div class="crew-benefit-n">05</div>
+        <div>
+          <div class="crew-benefit-t">Snacks, hidratación y cierre de evento</div>
+          <div class="crew-benefit-sub">Durante todo el día + cerveza y pizza al finalizar</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- RULEBOOK -->
+<!-- RULEBOOK FAQ -->
 <section class="section">
   <div class="section-inner">
-    <div class="slabel">Lo que más preguntan los atletas</div>
-    <h2 class="sh">Preguntas frecuentes<br>sobre la carrera.</h2>
-    <p class="sb">El Q&A del Gym Tour existe para resolver exactamente estas dudas. Aquí un adelanto.</p>
+    <div class="slabel">Las preguntas más frecuentes</div>
+    <h2 class="sh">Todo lo que necesitas<br>saber antes de correr.</h2>
+    <p class="sb">En cada Gym Tour, los coaches responden estas preguntas en vivo. Aquí un adelanto.</p>
 
     <div class="rulebook-grid">
       <div class="rb-cell">
+        <div class="rb-q">¿Cuándo publican mi horario de salida?</div>
+        <div class="rb-a">Generalmente entre 48 y 72 horas antes de la carrera. Lo recibes por email y puedes verlo en tu perfil de HYROX.</div>
+      </div>
+      <div class="rb-cell">
         <div class="rb-q">¿Cuánto tiempo antes debo llegar al evento?</div>
-        <div class="rb-a">Recomendamos llegar al menos 60 minutos antes de tu wave de salida. Necesitas hacer check-in, recoger tu chip de tiempo y prepararte en la zona de calentamiento.</div>
+        <div class="rb-a">Se recomienda llegar al menos 60 minutos antes de tu wave. El check-in puede tener filas y necesitas tiempo para calentar y conocer el venue.</div>
       </div>
       <div class="rb-cell">
         <div class="rb-q">¿Qué pasa si no completo una estación correctamente?</div>
-        <div class="rb-a">El Head Judge de cada estación supervisa los estándares de movimiento. Si no cumples el estándar, recibes una penalización que se ejecuta en la pista antes de continuar.</div>
+        <div class="rb-a">El Head Judge de tu estación te asignará una penalización de tiempo — generalmente entre 5 y 15 segundos por repetición fallida, según el movimiento.</div>
       </div>
       <div class="rb-cell">
-        <div class="rb-q">¿Puedo cambiar mi horario de salida después de inscribirme?</div>
-        <div class="rb-a">Los horarios de salida (waves) se publican semanas antes del evento. Los cambios tienen fechas límite — el equipo de Experience te comunica exactamente cuándo y cómo puedes hacerlos.</div>
+        <div class="rb-q">¿Puedo personalizar mi número de participante?</div>
+        <div class="rb-a">Sí. Después de registrarte recibes un link para personalizarlo con tu nombre. Hay un plazo límite — revisa tu email de confirmación.</div>
       </div>
       <div class="rb-cell">
-        <div class="rb-q">¿Puedo competir en más de una división?</div>
-        <div class="rb-a">Cada atleta compite en una sola división por evento. Las divisiones van desde Open hasta Pro, y también incluyen categorías de edad, dobles y relevos. Elige la que mejor se adapta a tu nivel.</div>
+        <div class="rb-q">¿En qué división debo competir?</div>
+        <div class="rb-a">Depende de tu nivel y objetivos. Open es para todos. Pro requiere clasificación. En el Gym Tour los coaches te ayudan a identificar la división correcta para ti.</div>
       </div>
       <div class="rb-cell">
-        <div class="rb-q">¿Qué incluye el Bag Drop?</div>
-        <div class="rb-a">El Bag Drop es el área donde dejas tu mochila de manera segura durante la carrera. Se ubica cerca del área de salida y está disponible durante todo el evento para atletas y espectadores.</div>
-      </div>
-      <div class="rb-cell">
-        <div class="rb-q">¿Qué es la Rox Zone?</div>
-        <div class="rb-a">La Rox Zone es el área exclusiva para atletas registrados dentro del venue. Incluye hidratación, snacks, zona de descanso y acceso al área de calentamiento antes de tu wave de salida.</div>
+        <div class="rb-q">¿Puedo ir como espectador?</div>
+        <div class="rb-a">Sí — los eventos HYROX son abiertos para espectadores. También puedes sumarte como Crew y vivirlo desde adentro con todos los beneficios que eso implica.</div>
       </div>
     </div>
   </div>
@@ -235,11 +265,11 @@ footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; jus
 
 <!-- CTA -->
 <div class="cta-section">
-  <div class="cta-label">El Tour llega a tu ciudad</div>
-  <h2 class="cta-title">Encuentra tu<br>parada más cercana.</h2>
-  <p class="cta-sub">Revisa el calendario y busca el Gym Tour en los gimnasios afiliados de tu ciudad.</p>
+  <div class="cta-label">Encuentra el Gym Tour en tu ciudad</div>
+  <h2 class="cta-title">¿En qué ciudad<br>empezamos?</h2>
+  <p class="cta-sub">Revisa el calendario y encuentra el gym afiliado más cercano a ti.</p>
   <div class="cta-btns">
-    <a href="calendario.html" class="btn-p">Ver calendario completo</a>
+    <a href="calendario.html" class="btn-p">Ver calendario</a>
     <a href="gym-owners.html" class="btn-s">Soy Gym Owner</a>
   </div>
 </div>
