@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>HYROX Crew — QR WhatsApp</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body {
+  width: 100%; height: 100%;
+  background: #0A0A0A;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.screen {
+  width: 100vw; height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0;
+  padding: 5vh 6vw;
+  position: relative;
+}
+
+/* Top label */
+.top-label {
+  position: absolute;
+  top: 4vh; left: 0; right: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 1vh;
+}
+
+.hyrox-brand {
+  font-size: clamp(13px, 3.5vw, 18px);
+  font-weight: 900;
+  letter-spacing: 6px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.9);
+}
+
+.gym-tour-tag {
+  font-size: clamp(10px, 2.5vw, 13px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  background: #E8FF00;
+  color: #0A0A0A;
+  padding: 3px 14px;
+}
+
+/* QR block — center of screen */
+.qr-block {
+  display: flex; flex-direction: column;
+  align-items: center; gap: 3vh;
+}
+
+.qr-wrap {
+  background: #FFFFFF;
+  padding: clamp(12px, 3vw, 20px);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.qr-wrap img {
+  width: clamp(200px, 60vw, 340px);
+  height: clamp(200px, 60vw, 340px);
+  display: block;
+}
+
+.qr-cta {
+  font-size: clamp(22px, 7vw, 40px);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  letter-spacing: 1px;
+  text-align: center;
+  line-height: 1;
+}
+
+.qr-sub {
+  font-size: clamp(11px, 3vw, 16px);
+  font-weight: 300;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Bottom */
+.bottom-label {
+  position: absolute;
+  bottom: 4vh; left: 0; right: 0;
+  display: flex; flex-direction: column; align-items: center; gap: 1vh;
+}
+
+.wa-channel {
+  font-size: clamp(9px, 2.2vw, 12px);
+  font-weight: 300;
+  color: rgba(255,255,255,0.2);
+  letter-spacing: 1px;
+  text-align: center;
+}
+
+/* Yellow bar bottom */
+.bar {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 4px;
+  background: #E8FF00;
+}
+</style>
+</head>
+<body>
+<div class="screen">
+
+  <div class="top-label">
+    <div class="hyrox-brand">H Y R O X</div>
+    <div class="gym-tour-tag">Gym Tour México</div>
+  </div>
+
+  <div class="qr-block">
+    <div class="qr-wrap">
+      <img src="https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=https://whatsapp.com/channel/0029Vb6upPvFi8xlF3D9tz0E&bgcolor=ffffff&color=000000&margin=2" alt="QR HYROX MX Crew">
+    </div>
+    <div class="qr-cta">Únete al Crew</div>
+    <div class="qr-sub">Escanea con tu celular</div>
+  </div>
+
+  <div class="bottom-label">
+    <div class="wa-channel">Canal oficial WhatsApp · HYROX Sports México</div>
+  </div>
+
+  <div class="bar"></div>
+</div>
+</body>
+</html>
