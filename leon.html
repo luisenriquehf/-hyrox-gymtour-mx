@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gym Tour León — GT03 · T26/27</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bone: #EDE8E1; --bk: #0A0A0A; --wh: #F8F5F0;
+  --gl: #888; --gl2: #555; --bd: rgba(0,0,0,0.10);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* NAV */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: rgba(237,232,225,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--bd); }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1; }
+.nav-logo img { height: 22px; width: auto; display: block; }
+.nav-logo span { font-size: 9px; font-weight: 300; letter-spacing: 4px; color: var(--gl); text-transform: uppercase; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); text-decoration: none; transition: color 0.2s; }
+.nav-links a:hover { color: var(--bk); }
+
+/* HERO */
+.hero { min-height: 72vh; padding: 56px 48px 0; display: grid; grid-template-rows: 1fr auto; border-bottom: 1px solid var(--bd); }
+.hero-top { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 48px; padding-top: 80px; }
+.hero-eyebrow { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+.hero-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--gl); }
+.hero-wm { font-size: clamp(64px, 12vw, 140px); font-weight: 900; line-height: 0.9; letter-spacing: -1px; text-transform: uppercase; color: var(--bk); margin-bottom: 20px; }
+.hero-wm em { display: block; font-style: normal; font-weight: 300; font-size: clamp(16px, 2.6vw, 26px); letter-spacing: 6px; color: var(--gl); margin-top: 8px; }
+.hero-bottom { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; padding: 28px 0; border-top: 1px solid var(--bd); flex-wrap: wrap; }
+.hero-desc { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 480px; line-height: 1.85; }
+.hero-stats { display: flex; gap: 40px; flex-shrink: 0; }
+.stat-n { font-size: 26px; font-weight: 900; line-height: 1; color: var(--bk); }
+.stat-l { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); margin-top: 3px; }
+
+/* SECTIONS */
+.section { padding: 72px 48px; border-bottom: 1px solid var(--bd); }
+.section-inner { max-width: 1000px; margin: 0 auto; }
+.slabel { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 36px; display: flex; align-items: center; gap: 14px; }
+.slabel::after { content: ''; flex: 1; height: 1px; background: var(--bd); }
+.sh { font-size: clamp(28px, 4vw, 44px); font-weight: 900; line-height: 1.05; letter-spacing: -0.5px; text-transform: uppercase; color: var(--bk); margin-bottom: 16px; }
+.sb { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 560px; line-height: 1.85; }
+
+/* DAY BLOCKS */
+.days { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.day-card { background: var(--bone); padding: 36px 32px; }
+.day-tag { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 10px; }
+.day-title { font-size: 24px; font-weight: 900; text-transform: uppercase; color: var(--bk); margin-bottom: 18px; line-height: 1.1; }
+.day-block { display: flex; gap: 14px; padding: 14px 0; border-top: 1px solid var(--bd); }
+.day-block:first-of-type { border-top: none; }
+.day-time { font-size: 11px; font-weight: 700; letter-spacing: 1px; color: var(--bk); flex-shrink: 0; width: 56px; }
+.day-what b { display: block; font-size: 13px; font-weight: 600; color: var(--bk); margin-bottom: 2px; }
+.day-what span { font-size: 12px; font-weight: 300; color: var(--gl2); }
+
+/* PREP GRID */
+.prep-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.prep-cell { background: var(--bone); padding: 30px 28px; }
+.prep-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gl); margin-bottom: 12px; }
+.prep-t { font-size: 15px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.3px; color: var(--bk); margin-bottom: 8px; }
+.prep-b { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.7; }
+
+/* FAQ */
+.faq { margin-top: 40px; border-top: 1px solid var(--bd); }
+.faq-item { border-bottom: 1px solid var(--bd); padding: 22px 0; }
+.faq-q { font-size: 15px; font-weight: 700; color: var(--bk); margin-bottom: 8px; }
+.faq-a { font-size: 13px; font-weight: 300; color: var(--gl2); line-height: 1.7; max-width: 620px; }
+
+/* CREW BOX */
+.crew { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--bd); border: 1px solid var(--bd); margin-top: 48px; }
+.crew-cell { background: var(--bk); color: var(--bone); padding: 30px 28px; }
+.crew-cell:first-child { background: var(--bone); color: var(--bk); }
+.crew-n { font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; opacity: 0.6; margin-bottom: 10px; }
+.crew-t { font-size: 20px; font-weight: 900; text-transform: uppercase; margin-bottom: 8px; }
+.crew-b { font-size: 13px; font-weight: 300; line-height: 1.7; opacity: 0.85; }
+
+/* CTA */
+.cta { padding: 88px 48px; text-align: center; }
+.cta-label { font-size: 10px; font-weight: 600; letter-spacing: 4px; text-transform: uppercase; color: var(--gl); margin-bottom: 20px; }
+.cta-title { font-size: clamp(28px, 4.5vw, 52px); font-weight: 900; text-transform: uppercase; color: var(--bk); margin-bottom: 14px; line-height: 1; }
+.cta-sub { font-size: 14px; font-weight: 300; color: var(--gl2); max-width: 420px; margin: 0 auto 36px; line-height: 1.7; }
+.cta-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-p { display: inline-block; padding: 15px 36px; background: var(--bk); color: var(--bone); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; transition: opacity 0.2s; }
+.btn-p:hover { opacity: 0.8; }
+.btn-s { display: inline-block; padding: 15px 36px; background: transparent; color: var(--gl2); font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; border: 1px solid var(--bd); transition: all 0.2s; }
+.btn-s:hover { border-color: var(--bk); color: var(--bk); }
+
+/* FOOTER */
+footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; background: var(--bk); }
+.f-brand { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bone); }
+.f-brand span { font-weight: 300; font-size: 9px; letter-spacing: 4px; color: rgba(237,232,225,0.3); display: block; margin-top: 2px; }
+.f-links { display: flex; gap: 20px; list-style: none; }
+.f-links a { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: rgba(237,232,225,0.35); text-decoration: none; transition: color 0.2s; }
+.f-links a:hover { color: var(--bone); }
+.f-note { font-size: 9px; letter-spacing: 1px; color: rgba(237,232,225,0.2); }
+
+@media(max-width:768px){
+  .nav { padding: 0 20px; } .nav-links { display: none; }
+  .hero, .section, .cta { padding-left: 24px; padding-right: 24px; }
+  .hero-bottom { flex-direction: column; align-items: flex-start; }
+  .days, .prep-grid, .crew { grid-template-columns: 1fr; }
+  footer { padding: 20px 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-logo"><img src="assets/gym-tour-logo.svg" alt="Gym Tour México"><span>México · T26/27</span></a>
+  <ul class="nav-links">
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html">Soy Gym Owner</a></li>
+    <li><a href="atletas.html">Soy Atleta</a></li>
+    <li><a href="equipo.html">El Equipo</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top">
+    <div class="hero-eyebrow">GT 03 · Temporada 26/27</div>
+    <div class="hero-wm">
+      LEÓN
+      <em>Guanajuato · Ciudad Libre</em>
+    </div>
+    <div class="hero-bottom">
+      <p class="hero-desc">Un Gym Tour compacto: un día de visitas a los gimnasios afiliados de León y un cierre de comunidad la mañana siguiente. Simple, directo, y pensado para que tu equipo pierda el mínimo tiempo posible.</p>
+      <div class="hero-stats">
+        <div><div class="stat-n">Vie 18</div><div class="stat-l">Visitas a gyms</div></div>
+        <div><div class="stat-n">Sáb 19</div><div class="stat-l">Desayuno Gym Owners</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUÉ PASA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Itinerario</div>
+    <h2 class="sh">Dos días. Nada de sorpresas.</h2>
+    <p class="sb">El Gym Tour León no es una semana completa — es una visita enfocada. Así se ve.</p>
+
+    <div class="days">
+      <div class="day-card">
+        <div class="day-tag">Viernes 18 de Septiembre</div>
+        <div class="day-title">Visitas a gyms</div>
+        <div class="day-block">
+          <div class="day-time">AM</div>
+          <div class="day-what"><b>Turno 7:00–9:00</b><span>Visita a tu gym · clase en formato HYROX + Q&A</span></div>
+        </div>
+        <div class="day-block">
+          <div class="day-time">PM</div>
+          <div class="day-what"><b>Turno 18:00–20:00</b><span>Visita a tu gym · clase en formato HYROX + Q&A</span></div>
+        </div>
+      </div>
+      <div class="day-card">
+        <div class="day-tag">Sábado 19 de Septiembre</div>
+        <div class="day-title">Desayuno de Gym Owners</div>
+        <div class="day-block">
+          <div class="day-time">AM</div>
+          <div class="day-what"><b>Networking + cierre</b><span>Lugar por confirmar — te avisamos por WhatsApp con tiempo</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ANTES DE LA VISITA -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Antes de la visita</div>
+    <h2 class="sh">Lo que necesitas saber.</h2>
+    <p class="sb">Cinco minutos de lectura. Esto es todo lo que tu equipo necesita para recibirnos bien.</p>
+
+    <div class="prep-grid">
+      <div class="prep-cell">
+        <div class="prep-n">Objetivo</div>
+        <div class="prep-t">Por qué llegamos a tu gym</div>
+        <div class="prep-b">Construir una relación cercana con tu comunidad y estar presentes para quien ya está inscrito en una carrera o está pensando correrla — resolvemos dudas de check-in, Rulebook y estándares de movimiento.</div>
+      </div>
+      <div class="prep-cell">
+        <div class="prep-n">La clase</div>
+        <div class="prep-t">Formato de la visita</div>
+        <div class="prep-b">Un entrenamiento tradicional de HYROX, enfocado en estándares de carrera y Rulebook. Tu equipo solo necesita estar presente para apoyar con check-in, música y gestión de tus clientes — no necesitas dar la clase ni tener equipo especial.</div>
+      </div>
+      <div class="prep-cell">
+        <div class="prep-n">Staff HYROX</div>
+        <div class="prep-t">¿Quieres ser Head Judge o Crew?</div>
+        <div class="prep-b">Platicamos sobre cómo ser parte del staff de la próxima carrera HYROX cerca de ti — dos turnos, puedes correr también. Invitamos especialmente a coaches, head coaches y gym owners.</div>
+      </div>
+      <div class="prep-cell">
+        <div class="prep-n">Contenido</div>
+        <div class="prep-t">Redes y pantallas</div>
+        <div class="prep-b">Te damos recursos para anunciar el Gym Tour en tus redes y en las pantallas de tu gym. Y si generas contenido durante la visita, taggéanos — lo compartimos con toda la comunidad HYROX México.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CREW -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Tus atletas, en la carrera</div>
+    <h2 class="sh">El Tour es la puerta al Crew.</h2>
+    <p class="sb">Aprovecha la visita para invitar a tus atletas a ser voluntarios en la próxima carrera HYROX. Beneficio real, y retención real para tu gym.</p>
+    <div class="crew">
+      <div class="crew-cell">
+        <div class="crew-n">1 turno completado</div>
+        <div class="crew-t">50% de descuento</div>
+        <div class="crew-b">Inscripción a cualquier carrera HYROX México, vigencia de un año, intransferible.</div>
+      </div>
+      <div class="crew-cell">
+        <div class="crew-n">2 o más turnos</div>
+        <div class="crew-t">Inscripción gratuita</div>
+        <div class="crew-b">Corre HYROX gratis. Además: playera oficial, snacks durante el evento y $300 MXN en tienda Puma.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="section-inner">
+    <div class="slabel">Preguntas frecuentes</div>
+    <h2 class="sh">Antes de que preguntes.</h2>
+    <div class="faq">
+      <div class="faq-item">
+        <div class="faq-q">¿Necesitamos equipo especial?</div>
+        <div class="faq-a">No. Adaptamos la clase al equipamiento que ya tienes en tu gym.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Mi staff tiene que dar la clase?</div>
+        <div class="faq-a">No. Solo necesitamos que estén presentes para apoyar con check-in, música y la gestión de tus clientes durante la visita.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Cuánto dura la visita?</div>
+        <div class="faq-a">Cada turno es de dos horas (7:00–9:00 AM o 18:00–20:00 PM). Un Lead Coach y un miembro del equipo HYROX llegan a tu espacio.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Y si ninguno de los dos turnos me acomoda?</div>
+        <div class="faq-a">Escríbelo al registrarte. El equipo te contacta directamente para resolverlo — una llamada de menos de 10 minutos.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">¿Tiene algún costo para mi gym?</div>
+        <div class="faq-a">No. La visita es un beneficio de tu afiliación HTC.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+  <div class="cta-label">Siguiente paso</div>
+  <h2 class="cta-title">Reserva tu<br>horario de visita.</h2>
+  <p class="cta-sub">Elige AM o PM para el viernes 18 de septiembre. Toma menos de dos minutos.</p>
+  <div class="cta-btns">
+    <a href="reserva-leon.html" class="btn-p">Reservar mi horario</a>
+    <a href="gym-owners.html" class="btn-s">Ver info general de Gym Owners</a>
+  </div>
+</section>
+
+<footer>
+  <div class="f-brand">Gym Tour<span>León · GT03 · T26/27</span></div>
+  <ul class="f-links">
+    <li><a href="index.html">Inicio</a></li>
+    <li><a href="calendario.html">Calendario</a></li>
+    <li><a href="gym-owners.html">Gym Owners</a></li>
+  </ul>
+  <div class="f-note">HYROX México · T26/27</div>
+</footer>
+
+</body>
+</html>

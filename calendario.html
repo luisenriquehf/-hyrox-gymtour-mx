@@ -12,8 +12,9 @@ html { scroll-behavior: smooth; }
 body { background: var(--bone); color: var(--bk); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
 .nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 56px; background: rgba(237,232,225,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--bd); }
-.nav-logo { font-size: 13px; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--bk); text-decoration: none; line-height: 1; }
-.nav-logo span { display: block; font-weight: 300; font-size: 9px; letter-spacing: 4px; color: var(--gl); margin-top: 2px; }
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1; }
+.nav-logo img { height: 22px; width: auto; display: block; }
+.nav-logo span { font-size: 9px; font-weight: 300; letter-spacing: 4px; color: var(--gl); text-transform: uppercase; }
 .nav-links { display: flex; gap: 28px; list-style: none; }
 .nav-links a { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--gl); text-decoration: none; transition: color 0.2s; }
 .nav-links a:hover, .nav-links a.active { color: var(--bk); }
@@ -101,7 +102,7 @@ footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; jus
 <body>
 
 <nav class="nav">
-  <a href="index.html" class="nav-logo">Gym Tour<span>México · T26/27</span></a>
+  <a href="index.html" class="nav-logo"><img src="assets/gym-tour-logo.svg" alt="Gym Tour México"><span>México · T26/27</span></a>
   <ul class="nav-links">
     <li><a href="calendario.html" class="active">Calendario</a></li>
     <li><a href="gym-owners.html">Soy Gym Owner</a></li>
@@ -183,7 +184,7 @@ footer { padding: 24px 48px; border-top: 1px solid var(--bd); display: flex; jus
           <td><div class="td-date">Mié 16 – Sáb 19 Sep 2026</div></td>
           <td><div class="td-dias">4 días operativos</div></td>
           <td><span class="td-tag">Ciudad Libre</span></td>
-          <td><a href="#" class="td-link">Próximamente</a></td>
+          <td><a href="leon.html" class="td-link">Ver detalle →</a></td>
         </tr>
         <tr>
           <td><div class="td-n">GT 04</div></td>
