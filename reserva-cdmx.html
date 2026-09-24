@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reserva tu horario — Gym Tour CDMX · GT04</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --bone:#EDE8E1; --bk:#0A0A0A; --wh:#F8F5F0;
+    --gl:#888; --gl2:#555; --bd:rgba(0,0,0,0.10);
+    --radius: 2px;
+  }
+  html,body{ background:var(--bone); color:var(--bk); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased; }
+
+  .topbar{ display:flex; align-items:center; gap:10px; padding:20px 24px; border-bottom:1px solid var(--bd); }
+  .topbar img{ height:20px; width:auto; display:block; }
+  .topbar span{ font-size:9px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--gl); }
+
+  .wrap{ max-width:600px; margin:0 auto; padding:48px 24px 80px; }
+
+  .kicker{ font-size:10px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--gl); margin:0 0 14px; }
+  h1{ font-size:clamp(28px,6vw,38px); font-weight:900; text-transform:uppercase; line-height:1.05; letter-spacing:-0.5px; margin:0 0 16px; }
+  .intro{ font-size:14px; font-weight:300; line-height:1.7; color:var(--gl2); margin:0 0 24px; max-width:48ch; }
+
+  .notice{
+    border:1.5px solid var(--bk); border-radius:var(--radius); background:var(--wh);
+    padding:16px 18px; font-size:13px; line-height:1.6; margin:0 0 36px; font-weight:300; color:var(--gl2);
+  }
+  .notice b{ font-weight:700; color:var(--bk); }
+
+  .section-label{ font-size:10px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--gl); margin:0 0 14px; display:flex; align-items:center; gap:12px; }
+  .section-label::after{ content:''; flex:1; height:1px; background:var(--bd); }
+
+  .pill-row{ display:flex; flex-wrap:wrap; gap:8px; margin-bottom:30px; }
+  .pill{
+    border:1.5px solid var(--bd); background:var(--bone); color:var(--bk);
+    font-family:'Inter', sans-serif; font-size:12.5px; font-weight:600; padding:9px 16px;
+    border-radius:999px; cursor:pointer; transition:all .15s ease;
+  }
+  .pill:hover:not(:disabled){ border-color:var(--bk); }
+  .pill.selected{ background:var(--bk); color:var(--bone); border-color:var(--bk); }
+  .pill:disabled{ color:var(--gl); cursor:not-allowed; text-decoration:line-through; opacity:0.5; }
+
+  .slots{ display:flex; flex-direction:column; gap:1px; background:var(--bd); border:1px solid var(--bd); margin-bottom:8px; }
+  .slot{
+    border:none; padding:16px 18px; display:flex; align-items:center; justify-content:space-between;
+    gap:16px; cursor:pointer; background:var(--bone); transition:background .15s ease; text-align:left;
+  }
+  .slot:hover{ background:var(--wh); }
+  .slot.selected{ background:var(--wh); box-shadow: inset 2px 0 0 var(--bk); }
+  .slot.full{ cursor:not-allowed; opacity:0.45; }
+  .slot-left .coach{ font-size:15px; font-weight:700; margin:0; }
+  .slot.full .coach{ text-decoration:line-through; }
+
+  .badge{
+    flex:0 0 auto; width:34px; height:34px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:13px; background:var(--bk); color:var(--bone);
+  }
+  .slot.full .badge{ background:transparent; border:1.5px solid var(--gl); color:var(--gl); }
+
+  .empty-note{ font-size:13px; color:var(--gl); padding:6px 2px 10px; font-weight:300; }
+
+  .form-area{ max-height:0; overflow:hidden; transition:max-height .35s ease; }
+  .form-area.open{ max-height:1400px; margin-top:32px; }
+
+  .field{ margin-bottom:16px; }
+  .field label{ display:block; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--gl); margin-bottom:7px; }
+  .field input, .field textarea{
+    width:100%; padding:12px 14px; border:1.5px solid var(--bd); border-radius:var(--radius);
+    font-family:'Inter', sans-serif; font-size:14px; color:var(--bk); background:#fff;
+  }
+  .field input:focus, .field textarea:focus{ outline:none; border-color:var(--bk); }
+  .field textarea{ resize:vertical; min-height:70px; }
+
+  .resources-link{
+    display:inline-flex; align-items:center; gap:6px; border:1.5px solid var(--bk); border-radius:999px;
+    padding:8px 16px; font-size:12px; font-weight:600; color:var(--bk); text-decoration:none;
+    margin:0 0 18px 32px; transition:all .15s ease;
+  }
+  .resources-link:hover{ background:var(--bk); color:var(--bone); }
+
+  .checklist{ border-top:1px solid var(--bd); border-bottom:1px solid var(--bd); padding:22px 0; margin:24px 0; display:flex; flex-direction:column; gap:16px; }
+  .check-row{ display:flex; align-items:flex-start; gap:12px; cursor:pointer; }
+  .check-row input[type="checkbox"]{
+    appearance:none; -webkit-appearance:none; width:20px; height:20px; flex-shrink:0; margin-top:1px;
+    border:1.5px solid var(--bk); border-radius:2px; position:relative; cursor:pointer; background:#fff;
+  }
+  .check-row input[type="checkbox"]:checked{ background:var(--bk); }
+  .check-row input[type="checkbox"]:checked::after{
+    content:''; position:absolute; left:6px; top:2px; width:5px; height:10px;
+    border:solid var(--bone); border-width:0 2px 2px 0; transform:rotate(45deg);
+  }
+  .check-row .check-label{ font-size:13.5px; line-height:1.5; color:var(--bk); }
+  .check-row .check-label b{ font-weight:700; }
+  .check-row.optional .check-label{ color:var(--gl2); font-weight:300; }
+  .check-row .tentativo{ font-style:italic; color:var(--gl); }
+
+  .duda-box{ max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  .duda-box.open{ max-height:200px; margin-top:10px; }
+
+  .submit-btn{
+    width:100%; padding:15px 16px; background:var(--bk); color:var(--bone); border:none; border-radius:var(--radius);
+    font-family:'Inter', sans-serif; font-size:13px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    cursor:pointer; margin-top:6px; transition:opacity .15s ease;
+  }
+  .submit-btn:disabled{ background:var(--gl); color:var(--bone); opacity:0.5; cursor:not-allowed; }
+
+  .error-text{ color:#b3261e; font-size:13px; margin-top:10px; display:none; }
+
+  .confirm{ display:none; border:1.5px solid var(--bk); border-radius:var(--radius); padding:26px; margin-top:8px; }
+  .confirm .check{ width:34px; height:34px; border-radius:50%; background:var(--bk); color:var(--bone); display:flex; align-items:center; justify-content:center; font-weight:800; margin-bottom:16px; }
+  .confirm h2{ font-size:19px; font-weight:800; text-transform:uppercase; margin:0 0 8px; }
+  .confirm p{ font-size:14px; color:var(--gl2); line-height:1.6; margin:0; }
+
+  .status-note{ font-size:12px; color:var(--gl); margin-top:28px; line-height:1.6; font-weight:300; }
+
+  a.back{ display:inline-block; margin-top:32px; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--gl); text-decoration:none; }
+  a.back:hover{ color:var(--bk); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img src="assets/gym-tour-logo.svg" alt="Gym Tour México">
+  <span>México · T26/27</span>
+</div>
+
+<div class="wrap">
+  <p class="kicker">Gym Tour CDMX · GT04 · 29 Sep – 2 Oct</p>
+  <h1>Reserva tu horario de visita</h1>
+  <p class="intro">Elige la clase que se te acomode. Es una clase de 1 hora — en cuanto un horario se ocupe, deja de estar disponible.</p>
+
+  <p class="notice"><b>¡Tomamos tu preferencia en consideración!</b> Los horarios no son definitivos. Por favor, espera la confirmación por parte del equipo respecto al horario y coach.</p>
+
+  <p class="section-label">Elige el día</p>
+  <div class="pill-row" id="day-pills"></div>
+
+  <p class="section-label">Elige el turno</p>
+  <div class="pill-row" id="turno-pills"></div>
+
+  <div id="slots-area">
+    <p class="section-label">Elige tu horario</p>
+    <div class="slots" id="slots-list"></div>
+  </div>
+
+  <div class="form-area" id="form-area">
+    <div class="field">
+      <label for="f-gym">Nombre del gimnasio</label>
+      <input type="text" id="f-gym" placeholder="Ej. Box Norte HYROX">
+    </div>
+    <div class="field">
+      <label for="f-contact">Nombre de contacto</label>
+      <input type="text" id="f-contact" placeholder="Quién nos recibe">
+    </div>
+    <div class="field">
+      <label for="f-phone">WhatsApp</label>
+      <input type="tel" id="f-phone" placeholder="10 dígitos">
+    </div>
+    <div class="field">
+      <label for="f-location">Anexa tu ubicación</label>
+      <input type="url" id="f-location" placeholder="Link de Google Maps">
+    </div>
+
+    <div class="checklist">
+      <label class="check-row">
+        <input type="checkbox" id="f-read">
+        <span class="check-label"><b>Ya leí</b> la información del Gym Tour CDMX (objetivo, formato de la clase y qué esperar).</span>
+      </label>
+      <label class="check-row">
+        <input type="checkbox" id="f-resources">
+        <span class="check-label"><b>Ya tengo</b> los recursos para anunciar el Tour en mis redes y pantallas.</span>
+      </label>
+      <a class="resources-link" href="https://drive.google.com/drive/folders/194fJL9OZmq5iLwbjHQfIYbIk5ENkGhTi?usp=sharing" target="_blank" rel="noopener">Descargar recursos ↗</a>
+      <label class="check-row optional">
+        <input type="checkbox" id="f-duda-check">
+        <span class="check-label">Tengo una duda antes de la visita — quiero que me contacten.</span>
+      </label>
+      <div class="duda-box" id="duda-box">
+        <div class="field" style="margin-bottom:0;">
+          <label for="f-duda">Cuéntanos tu duda</label>
+          <textarea id="f-duda"></textarea>
+        </div>
+      </div>
+      <label class="check-row optional">
+        <input type="checkbox" id="f-training">
+        <span class="check-label">Quiero asistir al Gym Owners Lab (Training + Breakfast), sábado 3 de 9am a 12 <span class="tentativo">(horario tentativo)</span>.</span>
+      </label>
+    </div>
+
+    <div class="field">
+      <label for="f-notes">Notas (opcional)</label>
+      <textarea id="f-notes" placeholder="Algo más que debamos saber antes de la visita"></textarea>
+    </div>
+
+    <button class="submit-btn" id="submit-btn" disabled>Reservar horario</button>
+    <p class="error-text" id="error-text"></p>
+  </div>
+
+  <div class="confirm" id="confirm">
+    <div class="check">✓</div>
+    <h2>Quedaste registrado</h2>
+    <p id="confirm-body"></p>
+  </div>
+
+  <p class="status-note" id="status-note"></p>
+  <a href="cdmx.html" class="back">← Volver a la info de CDMX</a>
+</div>
+
+<script>
+  // ── Configuración ──────────────────────────────────────────────
+  // Backend de Apps Script (el mismo que configuró Andy para este calendario).
+  const BACKEND_URL = "https://script.google.com/macros/s/AKfycbzcWJfOIZPPTcEfG9DHhfEtjcAtdzGgPgzYDjbNlNzVjx003B37jzUfBu7pxxSPJf6PFQ/exec";
+
+  const STORAGE_KEY = "gymtour_calendario_general";
+
+  // ── Calendario (coach + hora excluyendo a Liz) ──────────────────
+  const CALENDAR = [
+    { key: "2026-09-29", label: "Mar 29 sept", turnos: {
+        am: [
+          { coach: "Cami", hours: "6:00 – 7:00" },
+          { coach: "Cami", hours: "8:00 – 9:00" },
+          { coach: "Tavo", hours: "6:00 – 7:00" },
+          { coach: "Tavo", hours: "8:00 – 9:00" }
+        ],
+        pm: [
+          { coach: "Cami", hours: "18:00 – 19:00" },
+          { coach: "Cami", hours: "20:00 – 21:00" },
+          { coach: "Tavo", hours: "18:00 – 19:00" },
+          { coach: "Tavo", hours: "20:00 – 21:00" }
+        ]
+    }},
+    { key: "2026-09-30", label: "Mié 30 sept", turnos: {
+        am: [
+          { coach: "Cami", hours: "6:00 – 7:00" },
+          { coach: "Cami", hours: "8:00 – 9:00" },
+          { coach: "Tavo", hours: "6:00 – 7:00" },
+          { coach: "Tavo", hours: "8:00 – 9:00" },
+          { coach: "María", hours: "6:00 – 7:00" },
+          { coach: "María", hours: "8:00 – 9:00" }
+        ],
+        pm: [
+          { coach: "Cami", hours: "18:00 – 19:00" },
+          { coach: "Cami", hours: "20:00 – 21:00" },
+          { coach: "Tavo", hours: "18:00 – 19:00" },
+          { coach: "Tavo", hours: "20:00 – 21:00" },
+          { coach: "María", hours: "18:00 – 19:00" },
+          { coach: "María", hours: "20:00 – 21:00" },
+          { coach: "Charly", hours: "18:00 – 19:00" },
+          { coach: "Charly", hours: "20:00 – 21:00" }
+        ]
+    }},
+    { key: "2026-10-01", label: "Jue 1 oct", turnos: {
+        am: [
+          { coach: "Cami", hours: "6:00 – 7:00" },
+          { coach: "Cami", hours: "8:00 – 9:00" },
+          { coach: "Tavo", hours: "6:00 – 7:00" },
+          { coach: "Tavo", hours: "8:00 – 9:00" },
+          { coach: "María", hours: "6:00 – 7:00" },
+          { coach: "María", hours: "8:00 – 9:00" },
+          { coach: "Charly", hours: "6:00 – 7:00" },
+          { coach: "Charly", hours: "8:00 – 9:00" }
+        ],
+        pm: [
+          { coach: "Cami", hours: "18:00 – 19:00" },
+          { coach: "Cami", hours: "20:00 – 21:00" },
+          { coach: "Tavo", hours: "18:00 – 19:00" },
+          { coach: "Tavo", hours: "20:00 – 21:00" },
+          { coach: "María", hours: "18:00 – 19:00" },
+          { coach: "María", hours: "20:00 – 21:00" },
+          { coach: "Charly", hours: "18:00 – 19:00" },
+          { coach: "Charly", hours: "20:00 – 21:00" }
+        ]
+    }},
+    { key: "2026-10-02", label: "Vie 2 oct", turnos: {
+        am: [
+          { coach: "María", hours: "6:00 – 7:00" },
+          { coach: "María", hours: "8:00 – 9:00" },
+          { coach: "Charly", hours: "6:00 – 7:00" },
+          { coach: "Charly", hours: "8:00 – 9:00" }
+        ],
+        pm: []
+    }}
+  ];
+
+  function slotId(dayKey, turno, coach, hours){
+    return `${dayKey}__${turno}__${coach}__${hours}`;
+  }
+
+  function getHourGroups(day, turno){
+    const slots = day.turnos[turno] || [];
+    const map = new Map(); // hours -> [coach, coach, ...]
+    slots.forEach(s => {
+      if (!map.has(s.hours)) map.set(s.hours, []);
+      map.get(s.hours).push(s.coach);
+    });
+    return map;
+  }
+
+  let selectedDay = CALENDAR[0].key;
+  let selectedTurno = "am";
+  let selectedSlot = null; // { dayKey, turno, coach, hours, id }
+  let bookings = []; // flat list from storage/backend
+
+  const hasClaudeStorage = () => typeof window.storage !== "undefined";
+
+  async function loadBookings(){
+    if (BACKEND_URL){
+      try{
+        const res = await fetch(BACKEND_URL);
+        const data = await res.json();
+        bookings = data.bookings || [];
+        return;
+      }catch(e){ console.error("No se pudo leer el backend, usando modo local.", e); }
+    }
+    if (hasClaudeStorage()){
+      try{
+        const result = await window.storage.get(STORAGE_KEY, true);
+        if (result && result.value) bookings = JSON.parse(result.value);
+      }catch(e){ /* aún no existe */ }
+      return;
+    }
+    const local = localStorage.getItem(STORAGE_KEY);
+    if (local) bookings = JSON.parse(local);
+  }
+
+  async function persistBookings(){
+    if (hasClaudeStorage()){
+      await window.storage.set(STORAGE_KEY, JSON.stringify(bookings), true);
+    } else if (!BACKEND_URL){
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(bookings));
+    }
+  }
+
+  function isTaken(id){
+    return bookings.some(b => b.slotId === id);
+  }
+
+  function gymAlreadyBooked(gymName){
+    const norm = gymName.trim().toLowerCase();
+    return bookings.some(b => (b.gym || "").trim().toLowerCase() === norm);
+  }
+
+  function renderDayPills(){
+    const wrap = document.getElementById("day-pills");
+    wrap.innerHTML = "";
+    CALENDAR.forEach(day => {
+      const btn = document.createElement("button");
+      btn.className = "pill" + (day.key === selectedDay ? " selected" : "");
+      btn.textContent = day.label;
+      btn.addEventListener("click", () => {
+        selectedDay = day.key;
+        const day_ = CALENDAR.find(d => d.key === selectedDay);
+        if (!day_.turnos[selectedTurno] || day_.turnos[selectedTurno].length === 0){
+          selectedTurno = day_.turnos.am.length ? "am" : "pm";
+        }
+        selectedSlot = null;
+        renderAll();
+      });
+      wrap.appendChild(btn);
+    });
+  }
+
+  function renderTurnoPills(){
+    const wrap = document.getElementById("turno-pills");
+    wrap.innerHTML = "";
+    const day = CALENDAR.find(d => d.key === selectedDay);
+    [["am","AM"], ["pm","PM"]].forEach(([key,label]) => {
+      const btn = document.createElement("button");
+      const available = day.turnos[key] && day.turnos[key].length > 0;
+      btn.className = "pill" + (selectedTurno === key ? " selected" : "");
+      btn.textContent = label;
+      btn.disabled = !available;
+      if (available){
+        btn.addEventListener("click", () => {
+          selectedTurno = key;
+          selectedSlot = null;
+          renderAll();
+        });
+      }
+      wrap.appendChild(btn);
+    });
+  }
+
+  function renderSlots(){
+    const list = document.getElementById("slots-list");
+    list.innerHTML = "";
+    const day = CALENDAR.find(d => d.key === selectedDay);
+    const groups = getHourGroups(day, selectedTurno);
+
+    if (groups.size === 0){
+      list.innerHTML = '<p class="empty-note">No hay clases en este turno para este día.</p>';
+      return;
+    }
+
+    groups.forEach((coaches, hours) => {
+      const groupId = `${selectedDay}__${selectedTurno}__${hours}`;
+      const capacity = coaches.length;
+      const usedCount = coaches.filter(c => isTaken(slotId(selectedDay, selectedTurno, c, hours))).length;
+      const remaining = capacity - usedCount;
+      const full = remaining <= 0;
+      const el = document.createElement("div");
+      el.className = "slot" + (full ? " full" : "") + (selectedSlot && selectedSlot.groupId === groupId ? " selected" : "");
+      el.innerHTML = `
+        <div class="slot-left">
+          <p class="coach">${hours}</p>
+        </div>
+        <div class="badge">${full ? "✕" : remaining}</div>
+      `;
+      if (!full){
+        el.addEventListener("click", () => {
+          selectedSlot = { dayKey: selectedDay, turno: selectedTurno, hours, coaches, groupId };
+          document.getElementById("form-area").classList.add("open");
+          document.getElementById("error-text").style.display = "none";
+          renderSlots();
+        });
+      }
+      list.appendChild(el);
+    });
+  }
+
+  function renderAll(){
+    renderDayPills();
+    renderTurnoPills();
+    renderSlots();
+  }
+
+  document.getElementById("f-duda-check").addEventListener("change", (e)=>{
+    document.getElementById("duda-box").classList.toggle("open", e.target.checked);
+  });
+
+  // Checklist obligatorio: leí info + tengo recursos, antes de poder reservar
+  const fRead = document.getElementById("f-read");
+  const fResources = document.getElementById("f-resources");
+  const submitBtnEl = document.getElementById("submit-btn");
+  function refreshSubmitState(){
+    submitBtnEl.disabled = !(fRead.checked && fResources.checked);
+  }
+  fRead.addEventListener("change", refreshSubmitState);
+  fResources.addEventListener("change", refreshSubmitState);
+
+  document.getElementById("submit-btn").addEventListener("click", async ()=>{
+    const gym = document.getElementById("f-gym").value.trim();
+    const contact = document.getElementById("f-contact").value.trim();
+    const phone = document.getElementById("f-phone").value.trim();
+    const location = document.getElementById("f-location").value.trim();
+    const notes = document.getElementById("f-notes").value.trim();
+    const wantsDuda = document.getElementById("f-duda-check").checked;
+    const duda = wantsDuda ? document.getElementById("f-duda").value.trim() : "";
+    const errorEl = document.getElementById("error-text");
+
+    if (!selectedSlot) return;
+    if (!gym || !contact || !phone){
+      errorEl.textContent = "Completa gimnasio, contacto y WhatsApp para reservar.";
+      errorEl.style.display = "block";
+      return;
+    }
+
+    await loadBookings(); // refresca por si alguien más reservó justo antes
+
+    if (gymAlreadyBooked(gym)){
+      errorEl.textContent = "Este gimnasio ya tiene una clase reservada — solo se permite una por gimnasio.";
+      errorEl.style.display = "block";
+      return;
+    }
+
+    // Resolve an available coach behind the scenes for this hour group
+    const availableCoach = selectedSlot.coaches.find(c =>
+      !isTaken(slotId(selectedSlot.dayKey, selectedSlot.turno, c, selectedSlot.hours))
+    );
+    if (!availableCoach){
+      errorEl.textContent = "Ese horario se acaba de ocupar. Elige otro.";
+      errorEl.style.display = "block";
+      renderAll();
+      return;
+    }
+    const resolvedSlotId = slotId(selectedSlot.dayKey, selectedSlot.turno, availableCoach, selectedSlot.hours);
+
+    const booking = {
+      slotId: resolvedSlotId,
+      fecha: CALENDAR.find(d => d.key === selectedSlot.dayKey).label,
+      turno: selectedSlot.turno.toUpperCase(),
+      horario: selectedSlot.hours,
+      coach: availableCoach,
+      gym, contact, phone, location,
+      leyoInfo: document.getElementById("f-read").checked,
+      tieneRecursos: document.getElementById("f-resources").checked,
+      tieneDuda: wantsDuda, duda,
+      quiereTraining: document.getElementById("f-training").checked,
+      notes,
+      ts: new Date().toISOString()
+    };
+
+    if (BACKEND_URL){
+      try{
+        const res = await fetch(BACKEND_URL, { method: "POST", body: JSON.stringify(booking) });
+        const data = await res.json();
+        if (!data.ok){
+          errorEl.textContent = data.message || "No se pudo reservar. Intenta de nuevo.";
+          errorEl.style.display = "block";
+          await loadBookings();
+          renderAll();
+          return;
+        }
+        bookings = data.bookings;
+      }catch(e){
+        errorEl.textContent = "No se pudo conectar con el backend. Intenta de nuevo.";
+        errorEl.style.display = "block";
+        return;
+      }
+    } else {
+      bookings.push(booking);
+      await persistBookings();
+    }
+
+    document.getElementById("form-area").classList.remove("open");
+    document.getElementById("confirm-body").textContent =
+      `${gym}, quedaste registrado el ${booking.fecha}, ${booking.turno} — ${booking.horario}. Te contactamos por WhatsApp para confirmar detalles.`;
+    document.getElementById("confirm").style.display = "block";
+    renderAll();
+  });
+
+  (async function init(){
+    await loadBookings();
+    const note = document.getElementById("status-note");
+    if (!BACKEND_URL && !hasClaudeStorage()){
+      note.textContent = "Modo demo: los horarios solo se guardan en este navegador. Conecta el backend de Apps Script para compartir el estado real entre todas las personas que abran el link.";
+    }
+    renderAll();
+  })();
+</script>
+
+</body>
+</html>
