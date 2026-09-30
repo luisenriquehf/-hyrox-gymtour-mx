@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Calendario de Staff — Gym Tour CDMX · GT04</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --bone:#EDE8E1; --bk:#0A0A0A; --wh:#F8F5F0;
+    --gl:#888; --gl2:#555; --bd:rgba(0,0,0,0.10);
+    --radius: 2px;
+  }
+  html,body{ background:var(--bone); color:var(--bk); font-family:'Inter', sans-serif; -webkit-font-smoothing:antialiased; }
+
+  .topbar{ display:flex; align-items:center; gap:10px; padding:20px 24px; border-bottom:1px solid var(--bd); }
+  .topbar img{ height:20px; width:auto; display:block; }
+  .topbar span{ font-size:9px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--gl); }
+
+  .wrap{ max-width:880px; margin:0 auto; padding:48px 24px 100px; }
+
+  .kicker{ font-size:10px; font-weight:600; letter-spacing:3px; text-transform:uppercase; color:var(--gl); margin:0 0 14px; }
+  h1{ font-size:clamp(26px,5vw,36px); font-weight:900; text-transform:uppercase; line-height:1.05; letter-spacing:-0.5px; margin:0 0 14px; }
+  .intro{ font-size:14px; font-weight:300; line-height:1.7; color:var(--gl2); margin:0 0 44px; max-width:60ch; }
+
+  .day-section{ margin-bottom:44px; }
+  .day-head{ display:flex; align-items:baseline; gap:14px; margin-bottom:14px; }
+  .day-head h2{ font-size:20px; font-weight:900; text-transform:uppercase; letter-spacing:0.2px; }
+  .day-head .count{ font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--gl); }
+
+  .turno-label{ font-size:10px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gl); margin:18px 0 8px; padding-left:2px; }
+
+  .row{
+    display:grid; grid-template-columns:82px 1fr 120px 90px 90px 60px;
+    gap:12px; align-items:center; padding:13px 14px; background:var(--bone); border:1px solid var(--bd);
+  }
+  .row + .row{ border-top:none; }
+  .row-head{ background:var(--bk); color:var(--bone); font-size:9px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; padding:9px 14px; }
+  .r-hora{ font-size:13px; font-weight:800; }
+  .r-gym{ display:flex; flex-direction:column; gap:2px; }
+  .r-gym b{ font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:0.2px; }
+  .r-gym span{ font-size:11.5px; color:var(--gl); font-weight:300; }
+  .r-coach, .r-rl{ font-size:12.5px; font-weight:600; }
+  .r-map{ text-align:right; }
+  .r-map a{
+    display:inline-flex; align-items:center; justify-content:center; width:30px; height:30px;
+    border:1.5px solid var(--bk); border-radius:50%; color:var(--bk); text-decoration:none; font-size:13px;
+    transition:all .15s ease;
+  }
+  .r-map a:hover{ background:var(--bk); color:var(--bone); }
+  .r-map .no-map{ font-size:10px; color:var(--gl); }
+
+  .note-row{
+    grid-column:1 / -1; font-size:11.5px; font-weight:300; color:var(--gl2); padding:0 14px 10px;
+    background:var(--bone); border:1px solid var(--bd); border-top:none; margin-top:-1px;
+  }
+  .note-row b{ font-weight:700; color:var(--bk); }
+
+  .hpc-tag{
+    display:inline-block; font-size:9px; font-weight:700; letter-spacing:1px; text-transform:uppercase;
+    background:var(--bk); color:var(--bone); padding:2px 7px; border-radius:3px; margin-left:6px;
+  }
+
+  @media(max-width:720px){
+    .row{ grid-template-columns:62px 1fr 60px; }
+    .r-rl{ display:none; }
+    .row-head .rh-rl{ display:none; }
+  }
+
+  a.back{ display:inline-block; margin-top:20px; font-size:11px; font-weight:600; letter-spacing:1px; text-transform:uppercase; color:var(--gl); text-decoration:none; }
+  a.back:hover{ color:var(--bk); }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <img src="assets/gym-tour-logo.svg" alt="Gym Tour México">
+  <span>México · T26/27</span>
+</div>
+
+<div class="wrap">
+  <p class="kicker">Gym Tour CDMX · GT04 · Staff · 29 Sep – 2 Oct</p>
+  <h1>Calendario del Staff</h1>
+  <p class="intro">Los 29 gyms confirmados, en orden cronológico por día y hora, con coach, Relationship Lead y link al mapa. Úsalo para prepararte antes de cada visita.</p>
+
+  <div id="calendar"></div>
+
+  <a href="cdmx.html" class="back">← Volver a la info de CDMX</a>
+</div>
+
+<script>
+  // Calendario definitivo Gym Tour CDMX — GT04. Fuente: calendario de clases del equipo.
+  // Awake Animal (cancelado) excluido intencionalmente.
+  const SCHEDULE = [
+    { gym:"Vorne", zona:"Lomas de Chapultepec", dia:"Martes 29 Sep", turno:"AM", hora:"7:00", horaLabel:"7:00 – 8:00", coach:"Tavo / Cami", rl:"—", loc:"https://maps.app.goo.gl/1RKWeCt7DbsK74GNA?g_st=com.google.maps.preview.copy" },
+    { gym:"Good Stuff", zona:"Benito Juárez", dia:"Martes 29 Sep", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Cami", rl:"Luis / Liz / Andy" },
+
+    { gym:"Sports Hub", zona:"Álvaro Obregón", dia:"Miércoles 30 Sep", turno:"AM", hora:"6:00", horaLabel:"6:00 – 7:00", coach:"Cami", rl:"Andy", loc:"https://maps.google.com/maps/place//data=!4m2!3m1!1s0x85d201e9f96feab5:0xb058cc1a6a602998?entry=s&sa=X&ved=2ahUKEwif8KCn2IqXAxWD5ckDHVqdONsQ4kB6BAgZEAA&hl=es" },
+    { gym:"Hico", zona:"Edomex – López Mateos", dia:"Miércoles 30 Sep", turno:"AM", hora:"6:00", horaLabel:"6:00 – 7:00", coach:"Tavo", rl:"Liz", loc:"https://maps.app.goo.gl/eGG3nrtvrmv5Z1DH6?g_st=ic" },
+    { gym:"Hubmind Training Center", zona:"Interlomas", dia:"Miércoles 30 Sep", turno:"AM", hora:"6:00", horaLabel:"6:00 – 7:00", coach:"Maria", rl:"Luis", loc:"https://share.google/4oe4ZZXfm5Of9lon6" },
+    { gym:"Impulso Performance", zona:"Bosque Esmeralda", dia:"Miércoles 30 Sep", turno:"AM", hora:"8:00", horaLabel:"8:00 – 9:00", coach:"Tavo", rl:"Liz", loc:"https://maps.google.com/maps/place//data=!4m2!3m1!1s0x85d21b65e83b9ed3:0xd423aca0dab600c0?entry=s&sa=X&ved=2ahUKEwiUpKXZpouXAxXt6skDHZ9CNeIQ4kB6BAgXEAA&hl=es" },
+    { gym:"Lumo", zona:"Del Valle", dia:"Miércoles 30 Sep", turno:"PM", hora:"18:00", horaLabel:"18:00 – 19:00", coach:"Cami", rl:"Luis", loc:"https://share.google/VjvsjY9q2Yj1eTe6v" },
+    { gym:"Black Wolf Training", zona:"Magdalena Contreras", dia:"Miércoles 30 Sep", turno:"PM", hora:"18:00", horaLabel:"18:00 – 19:00", coach:"Tavo", rl:"Andy", loc:"https://maps.app.goo.gl/sRrtUuEBXPPksY2S8" },
+    { gym:"Edge Movement", zona:"Benito Juárez", dia:"Miércoles 30 Sep", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Cami", rl:"Luis", loc:"https://maps.google.com/maps/place//data=!4m2!3m1!1s0x85d1ffbc638aaaf1:0x6442c36c50fb0103?entry=s&sa=X&ved=2ahUKEwiB1JD3wYqXAxWrwckDHceIGIMQ4kB6BAgWEAA&hl=es", nota:"El gym está en el complejo City Towers, pero el acceso es sobre el eje — no hay que entrar al complejo." },
+    { gym:"MXCross", zona:"Coyoacán", dia:"Miércoles 30 Sep", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Maria", rl:"—", loc:"https://maps.app.goo.gl/ytLs6y2K1jEukUxK8?g_st=ic" },
+    { gym:"Hybrid Performance Unit", zona:"Naucalpan", dia:"Miércoles 30 Sep", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Liz", rl:"—", loc:"https://maps.app.goo.gl/C5GF46UeEnB8rp6eA" },
+    { gym:"Luther", zona:"Del Valle", dia:"Miércoles 30 Sep", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Tavo", rl:"Andy", loc:"https://maps.app.goo.gl/G8Aj6SFyihhaKVvd9?g_st=ic" },
+
+    { gym:"D3lta Training Center", zona:"Álvaro Obregón", dia:"Jueves 1 Oct", turno:"AM", hora:"6:00", horaLabel:"6:00 – 7:00", coach:"Cami", rl:"Andy" },
+    { gym:"LGNDS", zona:"Polanco", dia:"Jueves 1 Oct", turno:"AM", hora:"7:00", horaLabel:"7:00 – 8:00", coach:"Maria", rl:"Luis", loc:"https://maps.app.goo.gl/K54e3hiNJPknm5EW9?g_st=ic" },
+    { gym:"HPC San Ángel", zona:"San Ángel (centro propio)", dia:"Jueves 1 Oct", turno:"AM", hora:"7:30", horaLabel:"7:30 – 8:30", coach:"Liz", rl:"Luis", hpc:true, loc:"https://www.google.com/maps/place/HPC+San+Angel+-+HYROX+PERFORMANCE+CENTER+SAN+ANGEL/@19.353093,-99.189681,1148m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85d1ff007c8f540b:0x1c0d4470999e1d28!8m2!3d19.353093!4d-99.1871061!16s%2Fg%2F11zcb4wz44" },
+    { gym:"Mobeat", zona:"Jesús del Monte", dia:"Jueves 1 Oct", turno:"AM", hora:"8:00", horaLabel:"8:00 – 9:00", coach:"Tavo", rl:"Liz", loc:"https://maps.app.goo.gl/rjevZLM25aba69XK6?g_st=ic" },
+    { gym:"El Barrio Fitness", zona:"Benito Juárez Narvarte", dia:"Jueves 1 Oct", turno:"AM", hora:"8:00", horaLabel:"8:00 – 9:00", coach:"Cami", rl:"Andy", nota:"25 min de traslado desde el punto anterior." },
+    { gym:"C2W Project", zona:"Miguel Hidalgo", dia:"Jueves 1 Oct", turno:"PM", hora:"18:00", horaLabel:"18:00 – 19:00", coach:"Maria", rl:"Andy", loc:"https://maps.app.goo.gl/6ZrdRTcUiFBPnphH9?g_st=ic" },
+    { gym:"Enigma Fitness", zona:"Lindavista", dia:"Jueves 1 Oct", turno:"PM", hora:"18:00", horaLabel:"18:00 – 19:00", coach:"Tavo", rl:"—", loc:"https://maps.app.goo.gl/tMXHPCnNJeyNMMXR7?g_st=ic" },
+    { gym:"Más Nómadas", zona:"Benito Juárez", dia:"Jueves 1 Oct", turno:"PM", hora:"18:00", horaLabel:"18:00 – 19:00", coach:"Cami", rl:"Luis", loc:"https://maps.app.goo.gl/U8dQS4j8JYNoVATS7" },
+    { gym:"Rise Hybrid Training", zona:"Álvaro Obregón", dia:"Jueves 1 Oct", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Liz", rl:"Luis", loc:"https://maps.app.goo.gl/4fUEdSbq3aLds1PTA?g_st=ic" },
+    { gym:"La Comuna", zona:"Roma Norte", dia:"Jueves 1 Oct", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Maria", rl:"Andy", loc:"https://maps.app.goo.gl/e2jLoiaafrHXJsQj9?g_st=ic" },
+    { gym:"Agave Sports Society", zona:"Venustiano Carranza", dia:"Jueves 1 Oct", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Tavo", rl:"—", loc:"https://maps.app.goo.gl/neSpZd1piwQWVDFPA?g_st=ic", nota:"30 min de traslado desde el punto anterior." },
+    { gym:"Fit Homies", zona:"Benito Juárez", dia:"Jueves 1 Oct", turno:"PM", hora:"20:00", horaLabel:"20:00 – 21:00", coach:"Cami", rl:"—", loc:"https://maps.app.goo.gl/9WaumPXZYU68ssP27?g_st=ic" },
+
+    { gym:"Rakun", zona:"Cuajimalpa", dia:"Viernes 2 Oct", turno:"AM", hora:"6:00", horaLabel:"6:00 – 7:00", coach:"Maria", rl:"Andy", loc:"https://maps.app.goo.gl/gz6UFr6XJmRxbHja9?g_st=ic" },
+    { gym:"BF Fitness", zona:"Naucalpan", dia:"Viernes 2 Oct", turno:"AM", hora:"6:00", horaLabel:"6:00 – 7:00", coach:"Tavo", rl:"—", loc:"https://maps.app.goo.gl/o1ftE5RyMemB5aXW8" },
+    { gym:"HPC Polanco", zona:"Polanco (centro propio)", dia:"Viernes 2 Oct", turno:"AM", hora:"6:30", horaLabel:"6:30 – 7:30", coach:"Liz", rl:"Luis", hpc:true, loc:"https://www.google.com/maps/place/HYROX+PERFORMANCE+CENTER+(HPC)/@19.4334172,-99.1869494,1148m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85d1f90018736eab:0x2f17d20dd0fbf7!8m2!3d19.4334172!4d-99.1843745!16s%2Fg%2F11x_pg3fm8" },
+    { gym:"Eight Training", zona:"Cuajimalpa", dia:"Viernes 2 Oct", turno:"AM", hora:"8:00", horaLabel:"8:00 – 9:00", coach:"Maria", rl:"Andy" },
+    { gym:"Atlic", zona:"Lomas de Chapultepec", dia:"Viernes 2 Oct", turno:"AM", hora:"8:00", horaLabel:"8:00 – 9:00", coach:"Cami", rl:"Liz", loc:"https://maps.app.goo.gl/3v2gXyQZirC39a8d8?g_st=ac" }
+  ];
+
+  const DAYS = ["Martes 29 Sep", "Miércoles 30 Sep", "Jueves 1 Oct", "Viernes 2 Oct"];
+
+  function timeToMinutes(h){
+    const [hh, mm] = h.split(":").map(Number);
+    return hh * 60 + mm;
+  }
+
+  function rowHTML(item){
+    const mapCell = item.loc
+      ? `<a href="${item.loc}" target="_blank" rel="noopener" title="Ver ubicación">📍</a>`
+      : `<span class="no-map">s/link</span>`;
+    const hpcTag = item.hpc ? `<span class="hpc-tag">HPC</span>` : "";
+    let html = `
+      <div class="row">
+        <div class="r-hora">${item.horaLabel}</div>
+        <div class="r-gym"><b>${item.gym}${hpcTag}</b><span>${item.zona}</span></div>
+        <div class="r-coach">${item.coach}</div>
+        <div class="r-rl">${item.rl}</div>
+        <div class="r-map">${mapCell}</div>
+      </div>`;
+    if (item.nota){
+      html += `<div class="note-row"><b>Nota:</b> ${item.nota}</div>`;
+    }
+    return html;
+  }
+
+  const cal = document.getElementById("calendar");
+  let html = "";
+
+  DAYS.forEach(day => {
+    const items = SCHEDULE.filter(s => s.dia === day).sort((a,b) => timeToMinutes(a.hora) - timeToMinutes(b.hora));
+    if (items.length === 0) return;
+
+    html += `<div class="day-section"><div class="day-head"><h2>${day}</h2><span class="count">${items.length} gym${items.length !== 1 ? "s" : ""}</span></div>`;
+    html += `<div class="row row-head"><div>Hora</div><div>Gym</div><div>Coach</div><div class="rh-rl">RL</div><div></div></div>`;
+
+    let lastTurno = null;
+    items.forEach(item => {
+      if (item.turno !== lastTurno){
+        html += `<div class="turno-label">Turno ${item.turno}</div>`;
+        lastTurno = item.turno;
+      }
+      html += rowHTML(item);
+    });
+    html += `</div>`;
+  });
+
+  cal.innerHTML = html;
+</script>
+
+</body>
+</html>
